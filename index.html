@@ -1,40 +1,39 @@
-const TelegramBot = require("node-telegram-bot-api");
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Telegram WebApp</title>
+    <meta charset="utf-8" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #1e1e1e;
+        color: #fff;
+        padding: 20px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Привет из Telegram WebApp 👋</h1>
+    <p>Это работает внутри Telegram!</p>
 
-// 🔐 Токен от BotFather
-const token = "7689603245:AAFBFnr9KbdS8TFyzBjmy-9ikA060Pz8UU4";
+    <button onclick="sendData()">Отправить данные боту</button>
 
-const bot = new TelegramBot(token, { polling: true });
+    <script>
+      const tg = window.Telegram.WebApp;
+      tg.expand(); // Растягивает окно
 
-bot.on("message", (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text || "";
-
-  console.log(`Получено сообщение: ${text} от пользователя ${chatId}`);
-
-  // Защита от потенциального мусора
-  const safeText = text.replace(/[^a-zA-Z0-9а-яА-ЯёЁ\s.,!?/:-]/g, "");
-
-  bot.sendMessage(chatId, `Ты написал: ${safeText}`);
-});
-
-// 👉 Команда /start с кнопкой открытия мини-приложения
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-
-  bot.sendMessage(chatId, "Открой мини-приложение:", {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: "🚀 Открыть мини-приложение",
-            web_app: {
-              url: "https://eternalcold044.github.io/my-telegram-webapp/",
-            },
-          },
-        ],
-      ],
-    },
-  });
-});
-
-console.log("🤖 Бот запущен и слушает сообщения...");
+      function sendData() {
+        tg.sendData("Привет, бот! Я нажал кнопку в мини-приложении.");
+      }
+    </script>
+  </body>
+</html>
