@@ -69,24 +69,29 @@
       margin-top: 10px;
       min-height: 20px;
     }
-    .success {
-      color: #009900;
-      margin-top: 10px;
-      min-height: 20px;
+    #card {
+      background: linear-gradient(135deg, #ff66b3, #b30059);
+      color: white;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(179,0,89,0.7);
+      margin-top: 20px;
+      position: relative;
+      font-weight: bold;
     }
-    #card-image {
-      width: 100%;
-      border-radius: 12px;
-      margin: 15px 0;
-      box-shadow: 0 4px 8px rgba(179,0,89,0.7);
+    #card h3 {
+      margin: 0 0 10px 0;
+      font-size: 24px;
     }
-    .flex-row {
-      display: flex;
-      gap: 10px;
+    #card p {
+      font-size: 20px;
+      margin: 5px 0;
     }
-    .flex-row input, .flex-row button {
-      flex: 1;
-      margin: 0;
+    #card-amount {
+      font-size: 36px;
+      margin-top: 20px;
+      font-family: 'Courier New', Courier, monospace;
     }
   </style>
 </head>
@@ -94,67 +99,43 @@
 
   <h1>Банк Приколов</h1>
 
-  <div class="container" id="register-login-section">
+  <div class="container" id="register-section">
     <h2>Регистрация</h2>
     <label>Имя</label>
-    <input type="text" id="reg-name" placeholder="Введите имя" />
-    <label>Телефон</label>
-    <input type="text" id="reg-phone" placeholder="Введите телефон (цифры)" />
+    <input type="text" id="reg-firstname" placeholder="Введите имя" />
+    <label>Фамилия</label>
+    <input type="text" id="reg-lastname" placeholder="Введите фамилию" />
+    <label>Номер телефона</label>
+    <input type="text" id="reg-phone" placeholder="Введите номер телефона (цифры)" />
+    <label>Пароль</label>
+    <input type="password" id="reg-password" placeholder="Введите пароль" />
     <button id="btn-register">Зарегистрироваться</button>
     <div id="reg-error" class="error"></div>
+  </div>
 
-    <hr style="margin: 20px 0; border-color: #b30059" />
-
+  <div class="container" id="login-section" style="margin-top: 20px;">
     <h2>Вход</h2>
-    <label>Ваш ID</label>
-    <input type="text" id="login-id" placeholder="Введите ID" />
+    <label>Номер телефона</label>
+    <input type="text" id="login-phone" placeholder="Введите номер телефона" />
+    <label>Пароль</label>
+    <input type="password" id="login-password" placeholder="Введите пароль" />
     <button id="btn-login">Войти</button>
     <div id="login-error" class="error"></div>
   </div>
 
   <div class="container hidden" id="client-panel">
     <h2>Добро пожаловать, <span id="client-name"></span>!</h2>
-    <img id="card-image" src="https://cdn-icons-png.flaticon.com/512/2026/2026351.png" alt="Карта банка" />
-    <p>Баланс: <b><span id="client-balance">0</span> ₽</b></p>
 
-    <label>Пополнить баланс</label>
-    <div class="flex-row">
-      <input type="number" id="deposit-amount" placeholder="Сумма" min="1" />
-      <button id="btn-deposit">Пополнить</button>
+    <div id="card">
+      <h3>Счёт ссаной нищенки</h3>
+      <p>Банк Приколов</p>
+      <p id="card-amount">$100,000</p>
     </div>
 
-    <label>Перевести другому клиенту</label>
-    <input type="text" id="transfer-phone" placeholder="Телефон получателя" />
-    <input type="number" id="transfer-amount" placeholder="Сумма перевода" min="1" />
-    <button id="btn-transfer">Перевести</button>
-
     <button id="btn-logout" style="margin-top: 20px; background: #cc0055;">Выйти</button>
-
-    <div id="client-msg" class="error"></div>
-  </div>
-
-  <div class="container hidden" id="admin-login-section">
-    <h2>Админка — Вход</h2>
-    <input type="password" id="admin-password" placeholder="Введите пароль" />
-    <button id="btn-admin-login">Войти</button>
-    <div id="admin-login-error" class="error"></div>
-  </div>
-
-  <div class="container hidden" id="admin-panel">
-    <h2>Панель администратора</h2>
-    <label>ID клиента</label>
-    <input type="text" id="admin-client-id" placeholder="Введите ID клиента" />
-    <label>Новый баланс</label>
-    <input type="number" id="admin-new-balance" placeholder="Новый баланс" />
-    <button id="btn-update-balance">Обновить баланс</button>
-
-    <button id="btn-admin-logout" style="margin-top: 20px; background: #cc0055;">Выйти из админки</button>
-
-    <div id="admin-msg" class="error"></div>
   </div>
 
 <script>
-  // Работа с localStorage
   function loadClients() {
     const raw = localStorage.getItem('clients');
     return raw ? JSON.parse(raw) : {};
@@ -163,220 +144,130 @@
     localStorage.setItem('clients', JSON.stringify(clients));
   }
 
-  function generateId() {
-    return 'id-' + Math.random().toString(36).substr(2, 9);
-  }
-
-  // Элементы DOM
-  const regLoginSection = document.getElementById('register-login-section');
-  const clientPanel = document.getElementById('client-panel');
-  const adminLoginSection = document.getElementById('admin-login-section');
-  const adminPanel = document.getElementById('admin-panel');
-
-  const regName = document.getElementById('reg-name');
-  const regPhone = document.getElementById('reg-phone');
-  const regError = document.getElementById('reg-error');
-  const loginId = document.getElementById('login-id');
-  const loginError = document.getElementById('login-error');
-
-  const clientName = document.getElementById('client-name');
-  const clientBalance = document.getElementById('client-balance');
-  const depositAmount = document.getElementById('deposit-amount');
-  const btnDeposit = document.getElementById('btn-deposit');
-  const transferPhone = document.getElementById('transfer-phone');
-  const transferAmount = document.getElementById('transfer-amount');
-  const btnTransfer = document.getElementById('btn-transfer');
-  const btnLogout = document.getElementById('btn-logout');
-  const clientMsg = document.getElementById('client-msg');
-
-  const adminPassword = document.getElementById('admin-password');
-  const btnAdminLogin = document.getElementById('btn-admin-login');
-  const adminLoginError = document.getElementById('admin-login-error');
-
-  const adminClientId = document.getElementById('admin-client-id');
-  const adminNewBalance = document.getElementById('admin-new-balance');
-  const btnUpdateBalance = document.getElementById('btn-update-balance');
-  const btnAdminLogout = document.getElementById('btn-admin-logout');
-  const adminMsg = document.getElementById('admin-msg');
-
   let clients = loadClients();
   let currentClientId = null;
-  let isAdminLogged = false;
+
+  const regFirstName = document.getElementById('reg-firstname');
+  const regLastName = document.getElementById('reg-lastname');
+  const regPhone = document.getElementById('reg-phone');
+  const regPassword = document.getElementById('reg-password');
+  const regError = document.getElementById('reg-error');
+
+  const loginPhone = document.getElementById('login-phone');
+  const loginPassword = document.getElementById('login-password');
+  const loginError = document.getElementById('login-error');
+
+  const clientPanel = document.getElementById('client-panel');
+  const clientName = document.getElementById('client-name');
+  const registerSection = document.getElementById('register-section');
+  const loginSection = document.getElementById('login-section');
+
+  const btnLogout = document.getElementById('btn-logout');
 
   // Регистрация
   document.getElementById('btn-register').onclick = () => {
     regError.textContent = '';
-    const nameVal = regName.value.trim();
-    const phoneVal = regPhone.value.trim();
+    const firstName = regFirstName.value.trim();
+    const lastName = regLastName.value.trim();
+    const phone = regPhone.value.trim();
+    const password = regPassword.value;
 
-    if (!nameVal) {
+    if (!firstName) {
       regError.textContent = 'Введите имя';
       return;
     }
-    if (!phoneVal.match(/^\d{5,15}$/)) {
-      regError.textContent = 'Введите корректный телефон (5-15 цифр)';
+    if (!lastName) {
+      regError.textContent = 'Введите фамилию';
+      return;
+    }
+    if (!phone.match(/^\d{5,15}$/)) {
+      regError.textContent = 'Введите корректный номер телефона (5-15 цифр)';
+      return;
+    }
+    if (!password) {
+      regError.textContent = 'Введите пароль';
       return;
     }
 
-    // Проверяем, не занят ли телефон
+    // Проверка занятости телефона
     for (const id in clients) {
-      if (clients[id].phone === phoneVal) {
-        regError.textContent = 'Пользователь с таким телефоном уже зарегистрирован';
+      if (clients[id].phone === phone) {
+        regError.textContent = 'Пользователь с таким номером телефона уже зарегистрирован';
         return;
       }
     }
 
-    const id = generateId();
-    clients[id] = {
-      name: nameVal,
-      phone: phoneVal,
-      balance: 0
-    };
-    saveClients(clients);
-    alert(`Регистрация успешна!\nВаш ID: ${id}`);
+    // Создаем ID
+    const id = 'id-' + Math.random().toString(36).substr(2, 9);
 
-    regName.value = '';
+    clients[id] = {
+      firstname: firstName,
+      lastname: lastName,
+      phone: phone,
+      password: password
+    };
+
+    saveClients(clients);
+
+    alert('Регистрация прошла успешно! Теперь войдите в аккаунт.');
+
+    regFirstName.value = '';
+    regLastName.value = '';
     regPhone.value = '';
+    regPassword.value = '';
   };
 
-  // Вход клиента по ID
+  // Вход
   document.getElementById('btn-login').onclick = () => {
     loginError.textContent = '';
-    const id = loginId.value.trim();
-    if (!clients[id]) {
-      loginError.textContent = 'Пользователь с таким ID не найден';
-      return;
-    }
-    currentClientId = id;
-    showClientPanel();
-  };
+    const phone = loginPhone.value.trim();
+    const password = loginPassword.value;
 
-  // Отобразить панель клиента
-  function showClientPanel() {
-    const client = clients[currentClientId];
-    clientName.textContent = client.name;
-    clientBalance.textContent = client.balance.toFixed(2);
-    clientMsg.textContent = '';
-    regLoginSection.classList.add('hidden');
-    adminLoginSection.classList.add('hidden');
-    adminPanel.classList.add('hidden');
-    clientPanel.classList.remove('hidden');
-  }
-
-  // Пополнение баланса
-  btnDeposit.onclick = () => {
-    clientMsg.textContent = '';
-    const amount = parseFloat(depositAmount.value);
-    if (isNaN(amount) || amount <= 0) {
-      clientMsg.textContent = 'Введите корректную сумму для пополнения';
-      return;
-    }
-    clients[currentClientId].balance += amount;
-    saveClients(clients);
-    clientBalance.textContent = clients[currentClientId].balance.toFixed(2);
-    depositAmount.value = '';
-    clientMsg.style.color = 'green';
-    clientMsg.textContent = 'Баланс успешно пополнен!';
-  };
-
-  // Перевод по телефону
-  btnTransfer.onclick = () => {
-    clientMsg.textContent = '';
-    const phone = transferPhone.value.trim();
-    const amount = parseFloat(transferAmount.value);
     if (!phone.match(/^\d{5,15}$/)) {
-      clientMsg.textContent = 'Введите корректный телефон получателя';
+      loginError.textContent = 'Введите корректный номер телефона (5-15 цифр)';
       return;
     }
-    if (isNaN(amount) || amount <= 0) {
-      clientMsg.textContent = 'Введите корректную сумму перевода';
-      return;
-    }
-    if (clients[currentClientId].balance < amount) {
-      clientMsg.textContent = 'Недостаточно средств для перевода';
+    if (!password) {
+      loginError.textContent = 'Введите пароль';
       return;
     }
 
-    // Найти клиента с таким телефоном
-    let recipientId = null;
+    // Ищем клиента по телефону
+    let foundClientId = null;
     for (const id in clients) {
-      if (clients[id].phone === phone) {
-        recipientId = id;
+      if (clients[id].phone === phone && clients[id].password === password) {
+        foundClientId = id;
         break;
       }
     }
-    if (!recipientId) {
-      clientMsg.textContent = 'Получатель с таким телефоном не найден';
+
+    if (!foundClientId) {
+      loginError.textContent = 'Неверный номер телефона или пароль';
       return;
     }
 
-    clients[currentClientId].balance -= amount;
-    clients[recipientId].balance += amount;
-    saveClients(clients);
-    clientBalance.textContent = clients[currentClientId].balance.toFixed(2);
-    transferPhone.value = '';
-    transferAmount.value = '';
-    clientMsg.style.color = 'green';
-    clientMsg.textContent = `Успешно переведено ${amount.toFixed(2)} ₽ на телефон ${phone}`;
+    currentClientId = foundClientId;
+    showClientPanel();
   };
 
-  // Выход клиента
+  function showClientPanel() {
+    const client = clients[currentClientId];
+    clientName.textContent = client.firstname + ' ' + client.lastname;
+    registerSection.classList.add('hidden');
+    loginSection.classList.add('hidden');
+    clientPanel.classList.remove('hidden');
+  }
+
   btnLogout.onclick = () => {
     currentClientId = null;
     clientPanel.classList.add('hidden');
-    regLoginSection.classList.remove('hidden');
-    clientMsg.textContent = '';
-  };
-
-  // Вход в админку
-  btnAdminLogin.onclick = () => {
-    adminLoginError.textContent = '';
-    const pass = adminPassword.value;
-    if (pass !== '1234') {
-      adminLoginError.textContent = 'Неверный пароль';
-      return;
-    }
-    isAdminLogged = true;
-    adminPassword.value = '';
-    showAdminPanel();
-  };
-
-  function showAdminPanel() {
-    regLoginSection.classList.add('hidden');
-    clientPanel.classList.add('hidden');
-    adminLoginSection.classList.add('hidden');
-    adminPanel.classList.remove('hidden');
-    adminMsg.textContent = '';
-  }
-
-  // Обновление баланса клиента админом
-  btnUpdateBalance.onclick = () => {
-    adminMsg.textContent = '';
-    const id = adminClientId.value.trim();
-    const newBalance = parseFloat(adminNewBalance.value);
-    if (!clients[id]) {
-      adminMsg.textContent = 'Клиент с таким ID не найден';
-      return;
-    }
-    if (isNaN(newBalance) || newBalance < 0) {
-      adminMsg.textContent = 'Введите корректный баланс (0 или больше)';
-      return;
-    }
-    clients[id].balance = newBalance;
-    saveClients(clients);
-    adminMsg.style.color = 'green';
-    adminMsg.textContent = `Баланс клиента ${id} обновлен до ${newBalance.toFixed(2)} ₽`;
-    adminClientId.value = '';
-    adminNewBalance.value = '';
-  };
-
-  // Выход из админки
-  btnAdminLogout.onclick = () => {
-    isAdminLogged = false;
-    adminPanel.classList.add('hidden');
-    regLoginSection.classList.remove('hidden');
-    adminMsg.textContent = '';
+    registerSection.classList.remove('hidden');
+    loginSection.classList.remove('hidden');
+    loginPhone.value = '';
+    loginPassword.value = '';
+    loginError.textContent = '';
   };
 </script>
+
 </body>
 </html>
