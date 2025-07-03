@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #222;
+      background: #121212;
       color: #eee;
       margin: 0; padding: 0;
       display: flex;
@@ -16,90 +16,132 @@
       min-height: 100vh;
       padding: 20px;
     }
-    h1 { margin-bottom: 20px; }
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+    .container {
+      background: #222;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 420px;
+      width: 100%;
+      box-shadow: 0 0 15px #000;
+    }
     input, button {
-      padding: 10px;
-      margin: 5px 0;
-      border-radius: 6px;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 8px;
       border: none;
       font-size: 16px;
     }
     button {
-      background: #4caf50;
+      background-color: #4caf50;
       color: white;
+      font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-    button:hover { background: #45a049; }
-    .hidden { display: none; }
-    .container {
-      max-width: 400px;
-      width: 100%;
-      background: #333;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 0 15px #000;
+    button:hover {
+      background-color: #45a049;
     }
-    label { display: block; margin-top: 10px; }
-    .admin-section {
-      margin-top: 30px;
-      background: #444;
-      padding: 15px;
-      border-radius: 8px;
+    .hidden {
+      display: none;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
     }
     .error {
-      color: #ff6666;
+      color: #ff5555;
       margin-top: 10px;
+    }
+    .success {
+      color: #55ff55;
+      margin-top: 10px;
+    }
+    #card-image {
+      width: 100%;
+      border-radius: 12px;
+      margin: 15px 0;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+    }
+    .flex-row {
+      display: flex;
+      gap: 10px;
+    }
+    .flex-row input, .flex-row button {
+      flex: 1;
+      margin: 0;
     }
   </style>
 </head>
 <body>
+
   <h1>Банк Приколов</h1>
-  <div class="container" id="reg-login">
+
+  <div class="container" id="register-login-section">
     <h2>Регистрация</h2>
-    <label>Имя клиента:
-      <input type="text" id="reg-name" placeholder="Введите имя" />
-    </label>
+    <label>Имя</label>
+    <input type="text" id="reg-name" placeholder="Введите имя" />
+    <label>Телефон</label>
+    <input type="text" id="reg-phone" placeholder="Введите телефон (цифры)" />
     <button id="btn-register">Зарегистрироваться</button>
+    <div id="reg-error" class="error"></div>
+
+    <hr style="margin: 20px 0; border-color: #444" />
 
     <h2>Вход</h2>
-    <label>ID клиента:
-      <input type="text" id="login-id" placeholder="Введите ID" />
-    </label>
+    <label>Ваш ID</label>
+    <input type="text" id="login-id" placeholder="Введите ID" />
     <button id="btn-login">Войти</button>
-
-    <div id="reg-login-error" class="error"></div>
+    <div id="login-error" class="error"></div>
   </div>
 
   <div class="container hidden" id="client-panel">
     <h2>Добро пожаловать, <span id="client-name"></span>!</h2>
-    <p>Ваш баланс: <b><span id="client-balance">0</span> ₽</b></p>
-    <button id="btn-logout">Выйти</button>
+    <img id="card-image" src="https://cdn-icons-png.flaticon.com/512/2026/2026351.png" alt="Карта банка" />
+    <p>Баланс: <b><span id="client-balance">0</span> ₽</b></p>
+
+    <label>Пополнить баланс</label>
+    <div class="flex-row">
+      <input type="number" id="deposit-amount" placeholder="Сумма" min="1" />
+      <button id="btn-deposit">Пополнить</button>
+    </div>
+
+    <label>Перевести другому клиенту</label>
+    <input type="text" id="transfer-phone" placeholder="Телефон получателя" />
+    <input type="number" id="transfer-amount" placeholder="Сумма перевода" min="1" />
+    <button id="btn-transfer">Перевести</button>
+
+    <button id="btn-logout" style="margin-top: 20px; background: #a33;">Выйти</button>
+
+    <div id="client-msg" class="error"></div>
   </div>
 
   <div class="container hidden" id="admin-login-section">
-    <h2>Админка</h2>
-    <label>Введите пароль:
-      <input type="password" id="admin-password" placeholder="Пароль" />
-    </label>
-    <button id="btn-admin-login">Войти в админку</button>
-    <div id="admin-error" class="error"></div>
+    <h2>Админка — Вход</h2>
+    <input type="password" id="admin-password" placeholder="Введите пароль" />
+    <button id="btn-admin-login">Войти</button>
+    <div id="admin-login-error" class="error"></div>
   </div>
 
   <div class="container hidden" id="admin-panel">
     <h2>Панель администратора</h2>
-    <label>ID клиента:
-      <input type="text" id="admin-client-id" placeholder="Введите ID клиента" />
-    </label>
-    <label>Новый баланс:
-      <input type="number" id="admin-new-balance" placeholder="Новый баланс" />
-    </label>
+    <label>ID клиента</label>
+    <input type="text" id="admin-client-id" placeholder="Введите ID клиента" />
+    <label>Новый баланс</label>
+    <input type="number" id="admin-new-balance" placeholder="Новый баланс" />
     <button id="btn-update-balance">Обновить баланс</button>
-    <button id="btn-admin-logout" style="background:#a33; margin-top:10px;">Выйти из админки</button>
-    <div id="admin-success" style="color:#6f6; margin-top:10px;"></div>
+
+    <button id="btn-admin-logout" style="margin-top: 20px; background: #a33;">Выйти из админки</button>
+
+    <div id="admin-msg" class="error"></div>
   </div>
 
 <script>
-  // Работа с localStorage для клиентов
+  // --- Работа с localStorage ---
   function loadClients() {
     const raw = localStorage.getItem('clients');
     return raw ? JSON.parse(raw) : {};
@@ -108,131 +150,77 @@
     localStorage.setItem('clients', JSON.stringify(clients));
   }
 
-  // Генерация уникального ID
   function generateId() {
     return 'id-' + Math.random().toString(36).substr(2, 9);
   }
 
-  // Переменные DOM
-  const regLoginDiv = document.getElementById('reg-login');
+  // DOM элементы
+  const regLoginSection = document.getElementById('register-login-section');
   const clientPanel = document.getElementById('client-panel');
   const adminLoginSection = document.getElementById('admin-login-section');
   const adminPanel = document.getElementById('admin-panel');
 
-  const regNameInput = document.getElementById('reg-name');
-  const loginIdInput = document.getElementById('login-id');
-  const clientNameSpan = document.getElementById('client-name');
-  const clientBalanceSpan = document.getElementById('client-balance');
+  const regName = document.getElementById('reg-name');
+  const regPhone = document.getElementById('reg-phone');
+  const regError = document.getElementById('reg-error');
+  const loginId = document.getElementById('login-id');
+  const loginError = document.getElementById('login-error');
 
-  const regLoginError = document.getElementById('reg-login-error');
-  const adminError = document.getElementById('admin-error');
-  const adminSuccess = document.getElementById('admin-success');
-
-  // Кнопки
-  const btnRegister = document.getElementById('btn-register');
-  const btnLogin = document.getElementById('btn-login');
+  const clientName = document.getElementById('client-name');
+  const clientBalance = document.getElementById('client-balance');
+  const depositAmount = document.getElementById('deposit-amount');
+  const btnDeposit = document.getElementById('btn-deposit');
+  const transferPhone = document.getElementById('transfer-phone');
+  const transferAmount = document.getElementById('transfer-amount');
+  const btnTransfer = document.getElementById('btn-transfer');
   const btnLogout = document.getElementById('btn-logout');
+  const clientMsg = document.getElementById('client-msg');
 
+  const adminPassword = document.getElementById('admin-password');
   const btnAdminLogin = document.getElementById('btn-admin-login');
-  const btnAdminLogout = document.getElementById('btn-admin-logout');
+  const adminLoginError = document.getElementById('admin-login-error');
+
+  const adminClientId = document.getElementById('admin-client-id');
+  const adminNewBalance = document.getElementById('admin-new-balance');
   const btnUpdateBalance = document.getElementById('btn-update-balance');
+  const btnAdminLogout = document.getElementById('btn-admin-logout');
+  const adminMsg = document.getElementById('admin-msg');
 
-  const adminClientIdInput = document.getElementById('admin-client-id');
-  const adminNewBalanceInput = document.getElementById('admin-new-balance');
-
-  // Состояния
-  let currentClientId = null;
   let clients = loadClients();
+  let currentClientId = null;
+  let isAdminLogged = false;
 
-  // Регистрация клиента
-  btnRegister.onclick = () => {
-    regLoginError.textContent = '';
-    const name = regNameInput.value.trim();
-    if (!name) {
-      regLoginError.textContent = 'Введите имя клиента.';
+  // Регистрация
+  document.getElementById('btn-register').onclick = () => {
+    regError.textContent = '';
+    const nameVal = regName.value.trim();
+    const phoneVal = regPhone.value.trim();
+
+    if (!nameVal) {
+      regError.textContent = 'Введите имя';
       return;
+    }
+    if (!phoneVal.match(/^\d{5,15}$/)) {
+      regError.textContent = 'Введите корректный телефон (5-15 цифр)';
+      return;
+    }
+
+    // Проверка, не занят ли телефон
+    for (const id in clients) {
+      if (clients[id].phone === phoneVal) {
+        regError.textContent = 'Пользователь с таким телефоном уже зарегистрирован';
+        return;
+      }
     }
 
     const id = generateId();
-    clients[id] = { name, balance: 0 };
+    clients[id] = {
+      name: nameVal,
+      phone: phoneVal,
+      balance: 0
+    };
     saveClients(clients);
+    alert(`Регистрация успешна!\nВаш ID: ${id}`);
 
-    alert(`Клиент зарегистрирован!\nID: ${id}`);
-    regNameInput.value = '';
-  };
-
-  // Вход клиента
-  btnLogin.onclick = () => {
-    regLoginError.textContent = '';
-    const id = loginIdInput.value.trim();
-    if (!id || !clients[id]) {
-      regLoginError.textContent = 'Неверный ID клиента.';
-      return;
-    }
-    currentClientId = id;
-    showClientPanel();
-  };
-
-  // Показ панели клиента
-  function showClientPanel() {
-    regLoginDiv.classList.add('hidden');
-    adminLoginSection.classList.remove('hidden');
-    clientPanel.classList.remove('hidden');
-    adminPanel.classList.add('hidden');
-    updateClientInfo();
-  }
-
-  // Обновить инфо клиента на экране
-  function updateClientInfo() {
-    if (!currentClientId || !clients[currentClientId]) return;
-    clientNameSpan.textContent = clients[currentClientId].name;
-    clientBalanceSpan.textContent = clients[currentClientId].balance;
-  }
-
-  // Выход клиента
-  btnLogout.onclick = () => {
-    currentClientId = null;
-    regLoginDiv.classList.remove('hidden');
-    clientPanel.classList.add('hidden');
-    adminLoginSection.classList.add('hidden');
-    adminPanel.classList.add('hidden');
-    regLoginError.textContent = '';
-    adminError.textContent = '';
-    adminSuccess.textContent = '';
-    loginIdInput.value = '';
-  };
-
-  // Вход в админку
-  btnAdminLogin.onclick = () => {
-    adminError.textContent = '';
-    const pass = document.getElementById('admin-password').value.trim();
-    if (pass === '1234') {
-      adminLoginSection.classList.add('hidden');
-      adminPanel.classList.remove('hidden');
-      document.getElementById('admin-password').value = '';
-      adminSuccess.textContent = '';
-    } else {
-      adminError.textContent = 'Неверный пароль.';
-    }
-  };
-
-  // Выход из админки
-  btnAdminLogout.onclick = () => {
-    adminPanel.classList.add('hidden');
-    adminLoginSection.classList.remove('hidden');
-    adminClientIdInput.value = '';
-    adminNewBalanceInput.value = '';
-    adminSuccess.textContent = '';
-    adminError.textContent = '';
-  };
-
-  // Обновление баланса клиента
-  btnUpdateBalance.onclick = () => {
-    adminError.textContent = '';
-    adminSuccess.textContent = '';
-
-    const id = adminClientIdInput.value.trim();
-    const newBalance = Number(adminNewBalanceInput.value.trim());
-
-    if (!id || !clients[id]) {
-      adminError.textContent = 'Клиент с таким ID
+    regName.value = '';
+    regPhone
