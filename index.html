@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ClearSpend - NatWest</title>
   <style>
     * {
@@ -59,13 +59,6 @@
       margin-bottom: 15px;
     }
 
-    .input-group svg {
-      width: 20px;
-      height: 20px;
-      margin-right: 10px;
-      fill: #6a1b9a;
-    }
-
     .input-group input {
       border: none;
       outline: none;
@@ -103,6 +96,18 @@
     .links a.bold {
       font-weight: bold;
     }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #777;
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -111,33 +116,68 @@
     <span>NatWest</span>
   </header>
 
-  <h1>ClearSpend</h1>
+  <h1 id="form-title">ClearSpend</h1>
 
-  <div class="input-group">
-    <!-- Envelope icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm8 7l8-5H4l8 5zm0 2l-8-5v10h16V8l-8 5z"/>
-    </svg>
-    <input type="email" placeholder="Email address" />
+  <!-- Login form -->
+  <div id="login-form">
+    <div class="input-group">
+      <input type="email" placeholder="Email address" />
+    </div>
+    <div class="input-group">
+      <input type="password" placeholder="Password" />
+    </div>
+    <button class="login-btn">Log in</button>
+    <div class="links">
+      <a href="#">Reset password?</a>
+      <a href="#" class="bold" onclick="showRegister()">Need to register?</a>
+    </div>
   </div>
 
-  <div class="input-group">
-    <!-- Lock icon -->
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M12 17a2 2 0 1 0 .001-3.999A2 2 0 0 0 12 17zm6-7h-1V7a5 5 0 0 0-10 0v3H6c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm-8-3a2 2 0 0 1 4 0v3h-4V7z"/>
-    </svg>
-    <input type="password" placeholder="Password" />
-    <!-- Eye icon (non-functional) -->
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-      <path d="M12 4.5C7 4.5 2.7 8 1 12c1.7 4 6 7.5 11 7.5s9.3-3.5 11-7.5c-1.7-4-6-7.5-11-7.5zm0 13c-2.5 0-4.5-2-4.5-4.5S9.5 8.5 12 8.5s4.5 2 4.5 4.5S14.5 17.5 12 17.5zm0-7c-1.4 0-2.5 1.1-2.5 2.5S10.6 15.5 12 15.5s2.5-1.1 2.5-2.5S13.4 10.5 12 10.5z"/>
-    </svg>
+  <!-- Register form -->
+  <div id="register-form" class="hidden">
+    <div class="input-group">
+      <input type="text" placeholder="First name" />
+    </div>
+    <div class="input-group">
+      <input type="text" placeholder="Last name" />
+    </div>
+    <div class="input-group">
+      <input type="tel" placeholder="Phone number" />
+    </div>
+    <div class="input-group">
+      <input type="password" placeholder="Create password" />
+    </div>
+    <div class="input-group">
+      <input type="password" placeholder="Confirm password" />
+    </div>
+    <button class="login-btn">Register</button>
+    <div class="links">
+      <a href="#" onclick="showLogin()">← Back to login</a>
+    </div>
   </div>
 
-  <button class="login-btn">Log in</button>
-
-  <div class="links">
-    <a href="#">Reset password?</a>
-    <a href="#" class="bold">Need to register?</a>
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2025 NatWest Group. All rights reserved.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="#">Licensing</a></p>
   </div>
+
+  <script>
+    const loginForm = document.getElementById("login-form");
+    const registerForm = document.getElementById("register-form");
+    const title = document.getElementById("form-title");
+
+    function showRegister() {
+      loginForm.classList.add("hidden");
+      registerForm.classList.remove("hidden");
+      title.innerText = "Register";
+    }
+
+    function showLogin() {
+      registerForm.classList.add("hidden");
+      loginForm.classList.remove("hidden");
+      title.innerText = "ClearSpend";
+    }
+  </script>
 </body>
 </html>
