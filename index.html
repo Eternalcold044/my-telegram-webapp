@@ -1,186 +1,509 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Page - NatWest</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Banking UI - Educational Demo</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <style>
-    /* Общие стили */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f3f3f3;
-      margin: 0;
-      padding: 0;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+        /* Container for mobile viewport */
+        .mobile-container {
+            width: 375px;
+            height: 812px;
+            background: #ffffff;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+        }
 
-    .login-box {
-      background-color: #6a1b9a;
-      color: white;
-      width: 350px;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
+        /* Screen management */
+        .screen {
+            display: none;
+            height: 100%;
+            flex-direction: column;
+        }
 
-    h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
+        .screen.active {
+            display: flex;
+        }
 
-    .description {
-      font-size: 14px;
-      margin-bottom: 20px;
-      line-height: 1.6;
-    }
+        /* Header styles */
+        .header {
+            background: #6a1b9a;
+            color: white;
+            padding: 50px 20px 20px;
+            text-align: center;
+        }
 
-    .input-group {
-      margin-bottom: 15px;
-    }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
 
-    label {
-      font-size: 14px;
-      margin-bottom: 5px;
-      display: block;
-    }
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
 
-    input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px;
-    }
+        /* Content area */
+        .content {
+            flex: 1;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .forgot-password {
-      font-size: 12px;
-      color: #e1bee7;
-      text-decoration: none;
-    }
+        /* Form styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
 
-    .forgot-password:hover {
-      text-decoration: underline;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+            font-size: 14px;
+        }
 
-    .remember-me {
-      margin-top: 10px;
-      text-align: left;
-    }
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
 
-    .remember-me input {
-      margin-right: 5px;
-    }
+        .form-group input:focus {
+            outline: none;
+            border-color: #6a1b9a;
+        }
 
-    .info-text a {
-      color: #e1bee7;
-      font-size: 12px;
-      text-decoration: none;
-    }
+        /* Checkbox styles */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
 
-    .info-text a:hover {
-      text-decoration: underline;
-    }
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
 
-    .continue-btn {
-      background-color: #9c27b0;
-      color: white;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+        /* Button styles */
+        .btn {
+            background: #6a1b9a;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
 
-    .continue-btn:hover {
-      background-color: #8e24aa;
-    }
+        .btn:hover {
+            background: #5a1a8a;
+        }
 
-    .register {
-      text-align: center;
-      font-size: 12px;
-      margin-top: 20px;
-    }
+        .btn-secondary {
+            background: transparent;
+            color: #6a1b9a;
+            border: 2px solid #6a1b9a;
+        }
 
-    .register a {
-      color: #e1bee7;
-      text-decoration: none;
-    }
+        .btn-secondary:hover {
+            background: #6a1b9a;
+            color: white;
+        }
 
-    .register a:hover {
-      text-decoration: underline;
-    }
+        /* Link styles */
+        .link {
+            color: #6a1b9a;
+            text-decoration: none;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
 
-    .footer {
-      font-size: 12px;
-      color: #e1bee7;
-      margin-top: 20px;
-      text-align: center;
-    }
+        .link:hover {
+            text-decoration: underline;
+        }
 
-    .cancel-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background-color: transparent;
-      color: white;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-    }
+        /* PIN input styles */
+        .pin-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+        }
 
-    .cancel-btn:hover {
-      color: #e1bee7;
-    }
-  </style>
+        .pin-input {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .pin-input:focus {
+            border-color: #6a1b9a;
+            outline: none;
+        }
+
+        /* Dashboard styles */
+        .balance-card {
+            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .balance-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .balance-amount {
+            font-size: 32px;
+            font-weight: 300;
+        }
+
+        /* Action buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .action-btn {
+            background: #f5f5f5;
+            border: none;
+            padding: 20px 10px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .action-btn-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .action-btn-text {
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* Transaction list */
+        .transactions {
+            flex: 1;
+        }
+
+        .transactions h3 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .transaction-info h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .transaction-info p {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .transaction-amount {
+            font-weight: 500;
+        }
+
+        .transaction-amount.positive {
+            color: #4caf50;
+        }
+
+        .transaction-amount.negative {
+            color: #f44336;
+        }
+
+        /* Bottom navigation */
+        .bottom-nav {
+            display: flex;
+            background: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            padding: 10px 0;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav-item:hover {
+            background: #f5f5f5;
+        }
+
+        .nav-item.active {
+            color: #6a1b9a;
+        }
+
+        .nav-icon {
+            font-size: 20px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .nav-text {
+            font-size: 10px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 400px) {
+            .mobile-container {
+                width: 100vw;
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="login-box">
-      <button class="cancel-btn">Cancel</button>
-      <h2>Login step 1 - Online Banking</h2>
-      <p class="description">You can use your customer number or your 16-digit debit or credit card number to log in.</p>
-      
-      <div class="input-group">
-        <label for="customer-number">Customer number</label>
-        <input type="text" id="customer-number" placeholder="Enter your customer number">
-      </div>
-      
-      <div class="input-group">
-        <label for="card-number">Card number</label>
-        <input type="text" id="card-number" placeholder="Enter your card number">
-      </div>
+    <div class="mobile-container">
+        <!-- Login Screen -->
+        <div class="screen active" id="loginScreen">
+            <div class="header">
+                <h1>EduBank</h1>
+                <p>Educational Banking Demo</p>
+            </div>
+            <div class="content">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="customerNumber">Customer Number</label>
+                        <input type="text" id="customerNumber" placeholder="Enter your customer number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" placeholder="Enter your card number" required>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <button type="submit" class="btn">Continue</button>
+                    <a href="#" class="link" onclick="alert('This is a demo - password recovery not implemented')">Forgot your details?</a>
+                </form>
+            </div>
+        </div>
 
-      <a href="#" class="forgot-password">Forgotten your login details?</a>
-      
-      <div class="remember-me">
-        <input type="checkbox" id="remember-me">
-        <label for="remember-me">Remember me</label>
-      </div>
+        <!-- PIN Screen -->
+        <div class="screen" id="pinScreen">
+            <div class="header">
+                <h1>Enter PIN</h1>
+                <p>Please enter your 4-digit PIN</p>
+            </div>
+            <div class="content">
+                <div class="pin-container">
+                    <input type="password" class="pin-input" maxlength="1" id="pin1">
+                    <input type="password" class="pin-input" maxlength="1" id="pin2">
+                    <input type="password" class="pin-input" maxlength="1" id="pin3">
+                    <input type="password" class="pin-input" maxlength="1" id="pin4">
+                </div>
+                <button class="btn" onclick="showDashboard()">Login</button>
+                <a href="#" class="link" onclick="showLogin()">Back to login</a>
+            </div>
+        </div>
 
-      <p class="info-text">
-        <a href="#">What does this mean?</a>
-      </p>
+        <!-- Dashboard Screen -->
+        <div class="screen" id="dashboardScreen">
+            <div class="header">
+                <h1>Welcome back</h1>
+                <p>Your account overview</p>
+            </div>
+            <div class="content">
+                <div class="balance-card">
+                    <div class="balance-label">Current Balance</div>
+                    <div class="balance-amount">£2,847.50</div>
+                </div>
 
-      <button class="continue-btn">Continue</button>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="alert('Transfer feature - Demo only')">
+                        <span class="action-btn-icon">💸</span>
+                        <span class="action-btn-text">Transfer</span>
+                    </button>
+                    <button class="action-btn" onclick="alert('Top up feature - Demo only')">
+                        <span class="action-btn-icon">💰</span>
+                        <span class="action-btn-text">Top Up</span>
+                    </button>
+                    <button class="action-btn" onclick="alert('Pay bills feature - Demo only')">
+                        <span class="action-btn-icon">🧾</span>
+                        <span class="action-btn-text">Pay Bills</span>
+                    </button>
+                </div>
 
-      <p class="register">
-        Not Registered for Online Banking? <a href="#">Sign up here.</a>
-      </p>
+                <div class="transactions">
+                    <h3>Recent Transactions</h3>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>Coffee Shop</h4>
+                            <p>Today, 09:15</p>
+                        </div>
+                        <div class="transaction-amount negative">-£4.50</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>Salary Payment</h4>
+                            <p>Yesterday, 14:30</p>
+                        </div>
+                        <div class="transaction-amount positive">+£2,500.00</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>Grocery Store</h4>
+                            <p>2 days ago, 16:45</p>
+                        </div>
+                        <div class="transaction-amount negative">-£67.23</div>
+                    </div>
+                    <div class="transaction-item">
+                        <div class="transaction-info">
+                            <h4>Online Transfer</h4>
+                            <p>3 days ago, 11:20</p>
+                        </div>
+                        <div class="transaction-amount negative">-£150.00</div>
+                    </div>
+                </div>
+            </div>
 
-      <div class="footer">
-        <p>Your customer number is your date of birth (DDMMYY), followed by your unique number (up to 4 digits).</p>
-      </div>
+            <div class="bottom-nav">
+                <div class="nav-item active" onclick="showDashboard()">
+                    <span class="nav-icon">🏠</span>
+                    <span class="nav-text">Home</span>
+                </div>
+                <div class="nav-item" onclick="alert('Payments section - Demo only')">
+                    <span class="nav-icon">💳</span>
+                    <span class="nav-text">Payments</span>
+                </div>
+                <div class="nav-item" onclick="alert('Cards section - Demo only')">
+                    <span class="nav-icon">💳</span>
+                    <span class="nav-text">Cards</span>
+                </div>
+                <div class="nav-item" onclick="alert('Profile section - Demo only')">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-text">Profile</span>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <script>
+        // Screen navigation functions
+        function showScreen(screenId) {
+            // Hide all screens
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => screen.classList.remove('active'));
+            
+            // Show target screen
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        function showLogin() {
+            showScreen('loginScreen');
+        }
+
+        function showPin() {
+            showScreen('pinScreen');
+        }
+
+        function showDashboard() {
+            showScreen('dashboardScreen');
+        }
+
+        // Login form handling
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const customerNumber = document.getElementById('customerNumber').value;
+            const cardNumber = document.getElementById('cardNumber').value;
+            
+            if (customerNumber && cardNumber) {
+                showPin();
+            } else {
+                alert('Please fill in all required fields');
+            }
+        });
+
+        // PIN input handling
+        const pinInputs = document.querySelectorAll('.pin-input');
+        pinInputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1 && index < pinInputs.length - 1) {
+                    pinInputs[index + 1].focus();
+                }
+            });
+
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value === '' && index > 0) {
+                    pinInputs[index - 1].focus();
+                }
+            });
+        });
+
+        // Bottom navigation handling
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all nav items
+                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+                // Add active class to clicked item
+                this.classList.add('active');
+            });
+        });
+
+        // Add educational disclaimer
+        console.log('🎓 Educational Demo: This is a mock banking interface for learning purposes only.');
+        console.log('📚 Features demonstrated: Responsive design, form handling, screen navigation, CSS Grid/Flexbox');
+    </script>
 </body>
 </html>
