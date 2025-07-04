@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Banking UI - Educational Demo</title>
+    <title>Placeholder Bank - Mobile Banking Demo</title>
     <style>
         /* Reset and base styles */
         * {
@@ -19,6 +19,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 10px;
         }
 
         /* Container for mobile viewport */
@@ -43,34 +44,160 @@
             display: flex;
         }
 
-        /* Header styles */
-        .header {
-            background: #6a1b9a;
+        /* Home screen styles */
+        .home-screen {
+            background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
             color: white;
-            padding: 50px 20px 20px;
-            text-align: center;
+            justify-content: space-between;
         }
 
-        .header h1 {
+        /* Logo section */
+        .logo-section {
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .bank-name {
+            font-size: 28px;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
+
+        .bank-tagline {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* Login options */
+        .login-options {
+            padding: 0 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 18px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .login-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .register-btn {
+            background: white;
+            color: #6a1b9a;
+            border: none;
+            padding: 18px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .register-btn:hover {
+            background: #f5f5f5;
+        }
+
+        /* Footer */
+        .footer {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 15px;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-link:hover {
+            color: white;
+        }
+
+        .footer-text {
+            font-size: 10px;
+            opacity: 0.7;
+            line-height: 1.4;
+        }
+
+        /* Form screens */
+        .form-screen {
+            background: white;
+        }
+
+        .form-header {
+            background: #6a1b9a;
+            color: white;
+            padding: 50px 20px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .form-header h1 {
             font-size: 24px;
             font-weight: 300;
             margin-bottom: 8px;
         }
 
-        .header p {
+        .form-header p {
             font-size: 14px;
             opacity: 0.9;
         }
 
-        /* Content area */
-        .content {
+        /* Form content */
+        .form-content {
             flex: 1;
             padding: 30px 20px;
             display: flex;
             flex-direction: column;
         }
 
-        /* Form styles */
         .form-group {
             margin-bottom: 20px;
         }
@@ -97,16 +224,8 @@
             border-color: #6a1b9a;
         }
 
-        /* Checkbox styles */
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin: 20px 0;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
+        .form-group input::placeholder {
+            color: #999;
         }
 
         /* Button styles */
@@ -121,21 +240,16 @@
             cursor: pointer;
             transition: background-color 0.3s;
             width: 100%;
+            margin-top: auto;
         }
 
         .btn:hover {
             background: #5a1a8a;
         }
 
-        .btn-secondary {
-            background: transparent;
-            color: #6a1b9a;
-            border: 2px solid #6a1b9a;
-        }
-
-        .btn-secondary:hover {
-            background: #6a1b9a;
-            color: white;
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
         }
 
         /* Link styles */
@@ -151,155 +265,32 @@
             text-decoration: underline;
         }
 
-        /* PIN input styles */
-        .pin-container {
-            display: flex;
-            justify-content: space-between;
-            margin: 30px 0;
+        /* Card number formatting */
+        .card-input {
+            font-family: 'Courier New', monospace;
+            letter-spacing: 2px;
         }
 
-        .pin-input {
-            width: 50px;
-            height: 50px;
-            border: 2px solid #e0e0e0;
+        /* Success message */
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 15px;
             border-radius: 8px;
+            margin-bottom: 20px;
             text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .pin-input:focus {
-            border-color: #6a1b9a;
-            outline: none;
-        }
-
-        /* Dashboard styles */
-        .balance-card {
-            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
-            color: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-        }
-
-        .balance-label {
             font-size: 14px;
-            opacity: 0.9;
-            margin-bottom: 5px;
         }
 
-        .balance-amount {
-            font-size: 32px;
-            font-weight: 300;
-        }
-
-        /* Action buttons */
-        .action-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .action-btn {
-            background: #f5f5f5;
-            border: none;
-            padding: 20px 10px;
-            border-radius: 12px;
+        /* Error message */
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
             text-align: center;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .action-btn:hover {
-            background: #e0e0e0;
-        }
-
-        .action-btn-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .action-btn-text {
-            font-size: 12px;
-            color: #666;
-        }
-
-        /* Transaction list */
-        .transactions {
-            flex: 1;
-        }
-
-        .transactions h3 {
-            margin-bottom: 15px;
-            color: #333;
-            font-size: 18px;
-        }
-
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .transaction-info h4 {
             font-size: 14px;
-            margin-bottom: 4px;
-            color: #333;
-        }
-
-        .transaction-info p {
-            font-size: 12px;
-            color: #666;
-        }
-
-        .transaction-amount {
-            font-weight: 500;
-        }
-
-        .transaction-amount.positive {
-            color: #4caf50;
-        }
-
-        .transaction-amount.negative {
-            color: #f44336;
-        }
-
-        /* Bottom navigation */
-        .bottom-nav {
-            display: flex;
-            background: #ffffff;
-            border-top: 1px solid #e0e0e0;
-            padding: 10px 0;
-        }
-
-        .nav-item {
-            flex: 1;
-            text-align: center;
-            padding: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .nav-item:hover {
-            background: #f5f5f5;
-        }
-
-        .nav-item.active {
-            color: #6a1b9a;
-        }
-
-        .nav-icon {
-            font-size: 20px;
-            margin-bottom: 4px;
-            display: block;
-        }
-
-        .nav-text {
-            font-size: 10px;
         }
 
         /* Responsive adjustments */
@@ -310,131 +301,151 @@
                 border-radius: 0;
             }
         }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <div class="mobile-container">
-        <!-- Login Screen -->
-        <div class="screen active" id="loginScreen">
-            <div class="header">
-                <h1>EduBank</h1>
-                <p>Educational Banking Demo</p>
+        <!-- Home Screen -->
+        <div class="screen active home-screen" id="homeScreen">
+            <div class="logo-section">
+                <div class="logo">🥞</div>
+                <h1 class="bank-name">Placeholder Bank</h1>
+                <p class="bank-tagline">Your Educational Banking Partner</p>
             </div>
-            <div class="content">
-                <form id="loginForm">
+
+            <div class="login-options">
+                <button class="login-btn" onclick="showCardLogin()">
+                    💳 Login with Card Number
+                </button>
+                <button class="login-btn" onclick="showPhoneLogin()">
+                    📱 Login with Phone Number
+                </button>
+                <button class="register-btn" onclick="showRegister()">
+                    Create New Account
+                </button>
+            </div>
+
+            <div class="footer">
+                <div class="footer-links">
+                    <a href="#" class="footer-link" onclick="showInfo('Security Policy')">Security</a>
+                    <a href="#" class="footer-link" onclick="showInfo('Privacy Policy')">Privacy</a>
+                    <a href="#" class="footer-link" onclick="showInfo('Terms of Service')">Terms</a>
+                    <a href="#" class="footer-link" onclick="showInfo('Contact Support')">Support</a>
+                </div>
+                <p class="footer-text">
+                    Educational Demo Only • Not a Real Banking Service<br>
+                    © 2024 Placeholder Bank Learning Platform
+                </p>
+            </div>
+        </div>
+
+        <!-- Registration Screen -->
+        <div class="screen form-screen" id="registerScreen">
+            <div class="form-header">
+                <button class="back-btn" onclick="showHome()">←</button>
+                <h1>Create Account</h1>
+                <p>Join Placeholder Bank today</p>
+            </div>
+            <div class="form-content">
+                <form id="registerForm">
                     <div class="form-group">
-                        <label for="customerNumber">Customer Number</label>
-                        <input type="text" id="customerNumber" placeholder="Enter your customer number" required>
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" placeholder="Enter your first name" required>
                     </div>
                     <div class="form-group">
-                        <label for="cardNumber">Card Number</label>
-                        <input type="text" id="cardNumber" placeholder="Enter your card number" required>
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" placeholder="Enter your last name" required>
                     </div>
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="rememberMe">
-                        <label for="rememberMe">Remember me</label>
+                    <div class="form-group">
+                        <label for="regPhone">Phone Number</label>
+                        <input type="tel" id="regPhone" placeholder="+44 7XXX XXX XXX" required>
                     </div>
-                    <button type="submit" class="btn">Continue</button>
-                    <a href="#" class="link" onclick="alert('This is a demo - password recovery not implemented')">Forgot your details?</a>
+                    <div class="form-group">
+                        <label for="regPassword">Create Password</label>
+                        <input type="password" id="regPassword" placeholder="Minimum 8 characters" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+                    </div>
+                    <button type="submit" class="btn">Create Account</button>
                 </form>
             </div>
         </div>
 
-        <!-- PIN Screen -->
-        <div class="screen" id="pinScreen">
-            <div class="header">
-                <h1>Enter PIN</h1>
-                <p>Please enter your 4-digit PIN</p>
+        <!-- Card Login Screen -->
+        <div class="screen form-screen" id="cardLoginScreen">
+            <div class="form-header">
+                <button class="back-btn" onclick="showHome()">←</button>
+                <h1>Card Login</h1>
+                <p>Enter your UK card details</p>
             </div>
-            <div class="content">
-                <div class="pin-container">
-                    <input type="password" class="pin-input" maxlength="1" id="pin1">
-                    <input type="password" class="pin-input" maxlength="1" id="pin2">
-                    <input type="password" class="pin-input" maxlength="1" id="pin3">
-                    <input type="password" class="pin-input" maxlength="1" id="pin4">
-                </div>
-                <button class="btn" onclick="showDashboard()">Login</button>
-                <a href="#" class="link" onclick="showLogin()">Back to login</a>
+            <div class="form-content">
+                <form id="cardLoginForm">
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <input type="text" id="cardNumber" class="card-input" placeholder="1234 5678 9012 3456" maxlength="19" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardPin">PIN</label>
+                        <input type="password" id="cardPin" placeholder="Enter your 4-digit PIN" maxlength="4" required>
+                    </div>
+                    <button type="submit" class="btn">Login with Card</button>
+                </form>
+                <a href="#" class="link" onclick="showInfo('Card Help')">Need help with your card?</a>
             </div>
         </div>
 
-        <!-- Dashboard Screen -->
-        <div class="screen" id="dashboardScreen">
-            <div class="header">
-                <h1>Welcome back</h1>
-                <p>Your account overview</p>
+        <!-- Phone Login Screen -->
+        <div class="screen form-screen" id="phoneLoginScreen">
+            <div class="form-header">
+                <button class="back-btn" onclick="showHome()">←</button>
+                <h1>Phone Login</h1>
+                <p>Enter your registered phone and password</p>
             </div>
-            <div class="content">
-                <div class="balance-card">
-                    <div class="balance-label">Current Balance</div>
-                    <div class="balance-amount">£2,847.50</div>
-                </div>
-
-                <div class="action-buttons">
-                    <button class="action-btn" onclick="alert('Transfer feature - Demo only')">
-                        <span class="action-btn-icon">💸</span>
-                        <span class="action-btn-text">Transfer</span>
-                    </button>
-                    <button class="action-btn" onclick="alert('Top up feature - Demo only')">
-                        <span class="action-btn-icon">💰</span>
-                        <span class="action-btn-text">Top Up</span>
-                    </button>
-                    <button class="action-btn" onclick="alert('Pay bills feature - Demo only')">
-                        <span class="action-btn-icon">🧾</span>
-                        <span class="action-btn-text">Pay Bills</span>
-                    </button>
-                </div>
-
-                <div class="transactions">
-                    <h3>Recent Transactions</h3>
-                    <div class="transaction-item">
-                        <div class="transaction-info">
-                            <h4>Coffee Shop</h4>
-                            <p>Today, 09:15</p>
-                        </div>
-                        <div class="transaction-amount negative">-£4.50</div>
+            <div class="form-content">
+                <form id="phoneLoginForm">
+                    <div class="form-group">
+                        <label for="loginPhone">Phone Number</label>
+                        <input type="tel" id="loginPhone" placeholder="+44 7XXX XXX XXX" required>
                     </div>
-                    <div class="transaction-item">
-                        <div class="transaction-info">
-                            <h4>Salary Payment</h4>
-                            <p>Yesterday, 14:30</p>
-                        </div>
-                        <div class="transaction-amount positive">+£2,500.00</div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
                     </div>
-                    <div class="transaction-item">
-                        <div class="transaction-info">
-                            <h4>Grocery Store</h4>
-                            <p>2 days ago, 16:45</p>
-                        </div>
-                        <div class="transaction-amount negative">-£67.23</div>
-                    </div>
-                    <div class="transaction-item">
-                        <div class="transaction-info">
-                            <h4>Online Transfer</h4>
-                            <p>3 days ago, 11:20</p>
-                        </div>
-                        <div class="transaction-amount negative">-£150.00</div>
-                    </div>
-                </div>
+                    <button type="submit" class="btn">Login</button>
+                </form>
+                <a href="#" class="link" onclick="showInfo('Forgot Password')">Forgot your password?</a>
             </div>
+        </div>
 
-            <div class="bottom-nav">
-                <div class="nav-item active" onclick="showDashboard()">
-                    <span class="nav-icon">🏠</span>
-                    <span class="nav-text">Home</span>
+        <!-- Success Screen -->
+        <div class="screen form-screen" id="successScreen">
+            <div class="form-header">
+                <h1>Welcome!</h1>
+                <p>Login successful</p>
+            </div>
+            <div class="form-content">
+                <div class="success-message">
+                    🎉 You have successfully logged into Placeholder Bank!<br>
+                    This is an educational demo.
                 </div>
-                <div class="nav-item" onclick="alert('Payments section - Demo only')">
-                    <span class="nav-icon">💳</span>
-                    <span class="nav-text">Payments</span>
-                </div>
-                <div class="nav-item" onclick="alert('Cards section - Demo only')">
-                    <span class="nav-icon">💳</span>
-                    <span class="nav-text">Cards</span>
-                </div>
-                <div class="nav-item" onclick="alert('Profile section - Demo only')">
-                    <span class="nav-icon">👤</span>
-                    <span class="nav-text">Profile</span>
-                </div>
+                <button class="btn" onclick="showHome()">Return to Home</button>
             </div>
         </div>
     </div>
@@ -442,68 +453,160 @@
     <script>
         // Screen navigation functions
         function showScreen(screenId) {
-            // Hide all screens
             const screens = document.querySelectorAll('.screen');
             screens.forEach(screen => screen.classList.remove('active'));
-            
-            // Show target screen
             document.getElementById(screenId).classList.add('active');
         }
 
-        function showLogin() {
-            showScreen('loginScreen');
+        function showHome() {
+            showScreen('homeScreen');
         }
 
-        function showPin() {
-            showScreen('pinScreen');
+        function showRegister() {
+            showScreen('registerScreen');
         }
 
-        function showDashboard() {
-            showScreen('dashboardScreen');
+        function showCardLogin() {
+            showScreen('cardLoginScreen');
         }
 
-        // Login form handling
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const customerNumber = document.getElementById('customerNumber').value;
-            const cardNumber = document.getElementById('cardNumber').value;
-            
-            if (customerNumber && cardNumber) {
-                showPin();
-            } else {
-                alert('Please fill in all required fields');
+        function showPhoneLogin() {
+            showScreen('phoneLoginScreen');
+        }
+
+        function showSuccess() {
+            showScreen('successScreen');
+        }
+
+        function showInfo(topic) {
+            alert(`📋 ${topic}\n\nThis is an educational demo. In a real banking app, this would show detailed ${topic.toLowerCase()} information.\n\n🎓 Learning Purpose: Demonstrating UI/UX patterns for mobile banking applications.`);
+        }
+
+        // Card number formatting
+        document.getElementById('cardNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            if (formattedValue !== e.target.value) {
+                e.target.value = formattedValue;
             }
         });
 
-        // PIN input handling
-        const pinInputs = document.querySelectorAll('.pin-input');
-        pinInputs.forEach((input, index) => {
-            input.addEventListener('input', function() {
-                if (this.value.length === 1 && index < pinInputs.length - 1) {
-                    pinInputs[index + 1].focus();
+        // Phone number formatting
+        function formatPhoneNumber(input) {
+            input.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.startsWith('44')) {
+                    value = '+44 ' + value.substring(2);
+                } else if (value.startsWith('7')) {
+                    value = '+44 ' + value;
                 }
+                // Format as +44 7XXX XXX XXX
+                if (value.startsWith('+44 ')) {
+                    let numbers = value.substring(4);
+                    if (numbers.length > 0) {
+                        value = '+44 ' + numbers.substring(0, 4);
+                        if (numbers.length > 4) {
+                            value += ' ' + numbers.substring(4, 7);
+                        }
+                        if (numbers.length > 7) {
+                            value += ' ' + numbers.substring(7, 10);
+                        }
+                    }
+                }
+                e.target.value = value;
             });
+        }
 
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace' && this.value === '' && index > 0) {
-                    pinInputs[index - 1].focus();
-                }
-            });
+        formatPhoneNumber(document.getElementById('regPhone'));
+        formatPhoneNumber(document.getElementById('loginPhone'));
+
+        // Form submissions
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('❌ Passwords do not match!');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('❌ Password must be at least 8 characters long!');
+                return;
+            }
+            
+            // Simulate registration process
+            const btn = e.target.querySelector('.btn');
+            btn.innerHTML = '<span class="loading"></span> Creating Account...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = 'Create Account';
+                btn.disabled = false;
+                showSuccess();
+            }, 2000);
         });
 
-        // Bottom navigation handling
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                // Remove active class from all nav items
-                document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
-                // Add active class to clicked item
-                this.classList.add('active');
-            });
+        document.getElementById('cardLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+            const pin = document.getElementById('cardPin').value;
+            
+            if (cardNumber.length !== 16) {
+                alert('❌ Please enter a valid 16-digit card number!');
+                return;
+            }
+            
+            if (pin.length !== 4) {
+                alert('❌ Please enter a valid 4-digit PIN!');
+                return;
+            }
+            
+            // Simulate login process
+            const btn = e.target.querySelector('.btn');
+            btn.innerHTML = '<span class="loading"></span> Logging in...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = 'Login with Card';
+                btn.disabled = false;
+                showSuccess();
+            }, 2000);
         });
 
-        // Add educational disclaimer
-        console.log('🎓 Educational Demo: This is a mock banking interface for learning purposes only.');
-        console.log('📚 Features demonstrated: Responsive design, form handling, screen navigation, CSS Grid/Flexbox');
+        document.getElementById('phoneLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const phone = document.getElementById('loginPhone').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!phone.startsWith('+44')) {
+                alert('❌ Please enter a valid UK phone number!');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('❌ Password must be at least 8 characters long!');
+                return;
+            }
+            
+            // Simulate login process
+            const btn = e.target.querySelector('.btn');
+            btn.innerHTML = '<span class="loading"></span> Logging in...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                btn.innerHTML = 'Login';
+                btn.disabled = false;
+                showSuccess();
+            }, 2000);
+        });
+
+        // Educational console messages
+        console.log('🎓 Educational Banking Demo');
+        console.log('📚 Features: Multi-screen navigation, form validation, responsive design');
+        console.log('🔧 Technologies: HTML5, CSS3, Vanilla JavaScript');
+        console.log('⚠️  This is a learning project - not a real banking application');
     </script>
 </body>
 </html>
