@@ -15,7 +15,7 @@
     }
 
     body {
-      background: linear-gradient(135deg, #f4f0fa, #e1d4f5);
+      background: linear-gradient(135deg, #e9d7f6, #d8b4f8);
       color: #1c1c1c;
       min-height: 100vh;
       display: flex;
@@ -26,14 +26,10 @@
 
     header {
       width: 100%;
-      max-width: 1024px;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: center;
-      padding: 1rem 0;
-      border-bottom: 1px solid #ddd;
-      margin-bottom: 2rem;
-      position: relative;
+      margin-bottom: 1.5rem;
     }
 
     .logo-container {
@@ -42,12 +38,8 @@
       gap: 0.5rem;
     }
 
-    .bank-logo {
-      height: 32px;
-    }
-
     .bank-name {
-      font-size: 2rem;
+      font-size: 1.8rem;
       font-weight: 800;
       background: linear-gradient(to right, #5e2b97, #9246d5);
       -webkit-background-clip: text;
@@ -55,21 +47,14 @@
     }
 
     .header-icons {
-      position: absolute;
-      right: 0;
       display: flex;
-      gap: 1.5rem;
+      gap: 1rem;
     }
 
     .header-icon {
-      font-size: 1.2rem;
-      color: #5e2b97;
+      font-size: 1.3rem;
+      color: #000;
       cursor: pointer;
-      transition: color 0.2s;
-    }
-
-    .header-icon:hover {
-      color: #3f1a72;
     }
 
     .language-selector {
@@ -79,21 +64,19 @@
     .language-dropdown {
       display: none;
       position: absolute;
-      top: 1.8rem;
       right: 0;
       background: white;
       color: black;
       border: 1px solid #ccc;
       border-radius: 6px;
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
       z-index: 10;
     }
 
     .language-dropdown div {
       padding: 0.5rem 1rem;
       cursor: pointer;
-      white-space: nowrap;
     }
 
     .language-dropdown div:hover {
@@ -102,33 +85,32 @@
 
     .login-form {
       width: 100%;
-      max-width: 420px;
-      background: rgba(255, 255, 255, 0.85);
-      border-radius: 18px;
-      padding: 2rem;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-      backdrop-filter: blur(10px);
+      max-width: 400px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(6px);
     }
 
     .input-group {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.2rem;
     }
 
     label {
       display: block;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       font-weight: 600;
-      font-size: 0.95rem;
     }
 
     input {
       width: 100%;
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 10px;
-      background: white;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #1c1c1c;
       font-size: 1rem;
-      outline-color: #9246d5;
     }
 
     input::placeholder {
@@ -140,8 +122,8 @@
       background-color: #5e2b97;
       color: white;
       border: none;
-      padding: 0.9rem;
-      border-radius: 10px;
+      padding: 0.75rem;
+      border-radius: 8px;
       font-weight: 600;
       font-size: 1rem;
       cursor: pointer;
@@ -149,16 +131,16 @@
     }
 
     .button:hover {
-      background-color: #3f1a72;
+      background-color: #4b2180;
     }
 
     .forgot {
       margin-top: 1rem;
       text-align: center;
+      text-decoration: underline;
+      cursor: pointer;
       font-size: 0.9rem;
       color: #5e2b97;
-      cursor: pointer;
-      text-decoration: underline;
     }
 
     .modal {
@@ -169,36 +151,32 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.6);
       justify-content: center;
       align-items: center;
-      padding: 1rem;
     }
 
     .modal-content {
-      background: #fff;
+      background: white;
       color: black;
-      padding: 1.75rem;
-      border-radius: 14px;
-      width: 100%;
-      max-width: 420px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      padding: 1.5rem;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 400px;
     }
 
     .modal-close {
       text-align: right;
-      font-weight: bold;
-      font-size: 1rem;
       cursor: pointer;
-      color: #5e2b97;
+      font-weight: bold;
     }
 
     footer {
       margin-top: auto;
-      padding: 2rem 0 1rem;
       text-align: center;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       color: #5e2b97;
+      padding-top: 2rem;
     }
 
     footer a {
@@ -210,14 +188,13 @@
 <body>
   <header>
     <div class="logo-container">
-      <img src="https://upload.wikimedia.org/wikipedia/en/thumb/d/db/NatWest.svg/1200px-NatWest.svg.png" alt="NatWest Logo" class="bank-logo">
       <span class="bank-name">NatWest</span>
     </div>
     <div class="header-icons">
       <i class="fas fa-comment-dots header-icon" onclick="openModal('support')"></i>
       <i class="fas fa-phone header-icon" onclick="openModal('phone')"></i>
       <div class="language-selector">
-        <i class="fas fa-globe header-icon" style="color: black;" onclick="toggleLanguageDropdown()"></i>
+        <i class="fas fa-globe header-icon" onclick="toggleLanguageDropdown()"></i>
         <div class="language-dropdown" id="languageDropdown">
           <div onclick="setLanguage('ru')">Русский</div>
           <div onclick="setLanguage('en')">English</div>
@@ -226,4 +203,76 @@
     </div>
   </header>
 
-  <!-- Remaining body content stays unchanged -->
+  <form class="login-form" onsubmit="event.preventDefault(); openModal('password')">
+    <div class="input-group">
+      <label for="login" id="loginLabel">Phone Number or Email</label>
+      <input type="text" id="login" placeholder="Phone or email" required />
+    </div>
+    <button class="button" type="submit" id="continueBtn">Continue</button>
+    <div class="forgot" id="forgotPassword">Forgot password?</div>
+  </form>
+
+  <div class="modal" id="support-modal">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeModal('support')">X</div>
+      <h3>Customer Support</h3>
+      <p>Enter your email and message below:</p>
+      <input type="email" placeholder="you@example.com" style="width: 100%; padding: 0.5rem; margin-top: 1rem;" />
+      <textarea placeholder="Your message..." style="width: 100%; margin-top: 1rem; padding: 0.5rem;"></textarea>
+      <button class="button" style="margin-top: 1rem;">Send</button>
+    </div>
+  </div>
+
+  <div class="modal" id="phone-modal">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeModal('phone')">X</div>
+      <h3>Hotline Unavailable</h3>
+      <p>You are outside of the UK. Please visit our website to find the international support number.</p>
+    </div>
+  </div>
+
+  <div class="modal" id="password-modal">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeModal('password')">X</div>
+      <h3 id="passwordTitle">Enter Your Password</h3>
+      <input type="password" placeholder="Password" style="width: 100%; padding: 0.75rem; margin-top: 1rem;" />
+      <button class="button" style="margin-top: 1rem;">Login</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 NatWest Bank. All rights reserved.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="#">Security Information</a></p>
+  </footer>
+
+  <script>
+    function openModal(type) {
+      document.getElementById(`${type}-modal`).style.display = 'flex';
+    }
+
+    function closeModal(type) {
+      document.getElementById(`${type}-modal`).style.display = 'none';
+    }
+
+    function toggleLanguageDropdown() {
+      const dropdown = document.getElementById('languageDropdown');
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function setLanguage(lang) {
+      if (lang === 'ru') {
+        document.getElementById('loginLabel').innerText = 'Номер телефона или эл. почта';
+        document.getElementById('continueBtn').innerText = 'Продолжить';
+        document.getElementById('forgotPassword').innerText = 'Забыли пароль?';
+        document.getElementById('passwordTitle').innerText = 'Введите ваш пароль';
+      } else {
+        document.getElementById('loginLabel').innerText = 'Phone Number or Email';
+        document.getElementById('continueBtn').innerText = 'Continue';
+        document.getElementById('forgotPassword').innerText = 'Forgot password?';
+        document.getElementById('passwordTitle').innerText = 'Enter Your Password';
+      }
+      document.getElementById('languageDropdown').style.display = 'none';
+    }
+  </script>
+</body>
+</html>
