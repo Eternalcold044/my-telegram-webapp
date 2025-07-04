@@ -1,612 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Placeholder Bank - Mobile Banking Demo</title>
-    <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClearSpend - NatWest</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-        }
+    body {
+      background-color: #f8f8f8;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 20px;
+    }
 
-        /* Container for mobile viewport */
-        .mobile-container {
-            width: 375px;
-            height: 812px;
-            background: #ffffff;
-            border-radius: 25px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-            position: relative;
-        }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 30px;
+      gap: 10px;
+    }
 
-        /* Screen management */
-        .screen {
-            display: none;
-            height: 100%;
-            flex-direction: column;
-        }
+    header img {
+      width: 40px;
+      height: 40px;
+    }
 
-        .screen.active {
-            display: flex;
-        }
+    header span {
+      font-size: 20px;
+      font-weight: bold;
+      color: #3a0ca3;
+    }
 
-        /* Home screen styles */
-        .home-screen {
-            background: linear-gradient(135deg, #6a1b9a 0%, #8e24aa 100%);
-            color: white;
-            justify-content: space-between;
-        }
+    h1 {
+      color: #6a1b9a;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
 
-        /* Logo section */
-        .logo-section {
-            text-align: center;
-            padding: 80px 20px 40px;
-        }
+    .input-group {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: white;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
 
-        .logo {
-            width: 80px;
-            height: 80px;
-            background: white;
-            border-radius: 50%;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+    .input-group svg {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      fill: #6a1b9a;
+    }
 
-        .bank-name {
-            font-size: 28px;
-            font-weight: 300;
-            margin-bottom: 8px;
-        }
+    .input-group input {
+      border: none;
+      outline: none;
+      width: 100%;
+      font-size: 16px;
+    }
 
-        .bank-tagline {
-            font-size: 14px;
-            opacity: 0.9;
-        }
+    .login-btn {
+      background-color: #6a1b9a;
+      color: white;
+      font-size: 18px;
+      width: 100%;
+      max-width: 400px;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
 
-        /* Login options */
-        .login-options {
-            padding: 0 20px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+    .links {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+    }
 
-        .login-btn {
-            background: rgba(255, 255, 255, 0.15);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 18px 20px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-bottom: 15px;
-            backdrop-filter: blur(10px);
-        }
+    .links a {
+      text-decoration: none;
+      color: #6a1b9a;
+    }
 
-        .login-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .register-btn {
-            background: white;
-            color: #6a1b9a;
-            border: none;
-            padding: 18px 20px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-        }
-
-        .register-btn:hover {
-            background: #f5f5f5;
-        }
-
-        /* Footer */
-        .footer {
-            padding: 20px;
-            text-align: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 15px;
-        }
-
-        .footer-link {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            font-size: 12px;
-        }
-
-        .footer-link:hover {
-            color: white;
-        }
-
-        .footer-text {
-            font-size: 10px;
-            opacity: 0.7;
-            line-height: 1.4;
-        }
-
-        /* Form screens */
-        .form-screen {
-            background: white;
-        }
-
-        .form-header {
-            background: #6a1b9a;
-            color: white;
-            padding: 50px 20px 30px;
-            text-align: center;
-            position: relative;
-        }
-
-        .back-btn {
-            position: absolute;
-            left: 20px;
-            top: 50px;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .form-header h1 {
-            font-size: 24px;
-            font-weight: 300;
-            margin-bottom: 8px;
-        }
-
-        .form-header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* Form content */
-        .form-content {
-            flex: 1;
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #333;
-            font-size: 14px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #6a1b9a;
-        }
-
-        .form-group input::placeholder {
-            color: #999;
-        }
-
-        /* Button styles */
-        .btn {
-            background: #6a1b9a;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-            margin-top: auto;
-        }
-
-        .btn:hover {
-            background: #5a1a8a;
-        }
-
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-
-        /* Link styles */
-        .link {
-            color: #6a1b9a;
-            text-decoration: none;
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .link:hover {
-            text-decoration: underline;
-        }
-
-        /* Card number formatting */
-        .card-input {
-            font-family: 'Courier New', monospace;
-            letter-spacing: 2px;
-        }
-
-        /* Success message */
-        .success-message {
-            background: #e8f5e8;
-            color: #2e7d32;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        /* Error message */
-        .error-message {
-            background: #ffebee;
-            color: #c62828;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 400px) {
-            .mobile-container {
-                width: 100vw;
-                height: 100vh;
-                border-radius: 0;
-            }
-        }
-
-        /* Loading animation */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
+    .links a.bold {
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <div class="mobile-container">
-        <!-- Home Screen -->
-        <div class="screen active home-screen" id="homeScreen">
-            <div class="logo-section">
-                <div class="logo">🥞</div>
-                <h1 class="bank-name">Placeholder Bank</h1>
-                <p class="bank-tagline">Your Educational Banking Partner</p>
-            </div>
+  <header>
+    <img src="https://upload.wikimedia.org/wikipedia/en/8/8b/NatWest_Logo.png" alt="NatWest Logo">
+    <span>NatWest</span>
+  </header>
 
-            <div class="login-options">
-                <button class="login-btn" onclick="showCardLogin()">
-                    💳 Login with Card Number
-                </button>
-                <button class="login-btn" onclick="showPhoneLogin()">
-                    📱 Login with Phone Number
-                </button>
-                <button class="register-btn" onclick="showRegister()">
-                    Create New Account
-                </button>
-            </div>
+  <h1>ClearSpend</h1>
 
-            <div class="footer">
-                <div class="footer-links">
-                    <a href="#" class="footer-link" onclick="showInfo('Security Policy')">Security</a>
-                    <a href="#" class="footer-link" onclick="showInfo('Privacy Policy')">Privacy</a>
-                    <a href="#" class="footer-link" onclick="showInfo('Terms of Service')">Terms</a>
-                    <a href="#" class="footer-link" onclick="showInfo('Contact Support')">Support</a>
-                </div>
-                <p class="footer-text">
-                    Educational Demo Only • Not a Real Banking Service<br>
-                    © 2024 Placeholder Bank Learning Platform
-                </p>
-            </div>
-        </div>
+  <div class="input-group">
+    <!-- Envelope icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2zm8 7l8-5H4l8 5zm0 2l-8-5v10h16V8l-8 5z"/>
+    </svg>
+    <input type="email" placeholder="Email address" />
+  </div>
 
-        <!-- Registration Screen -->
-        <div class="screen form-screen" id="registerScreen">
-            <div class="form-header">
-                <button class="back-btn" onclick="showHome()">←</button>
-                <h1>Create Account</h1>
-                <p>Join Placeholder Bank today</p>
-            </div>
-            <div class="form-content">
-                <form id="registerForm">
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" placeholder="Enter your first name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" placeholder="Enter your last name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="regPhone">Phone Number</label>
-                        <input type="tel" id="regPhone" placeholder="+44 7XXX XXX XXX" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="regPassword">Create Password</label>
-                        <input type="password" id="regPassword" placeholder="Minimum 8 characters" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password</label>
-                        <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
-                    </div>
-                    <button type="submit" class="btn">Create Account</button>
-                </form>
-            </div>
-        </div>
+  <div class="input-group">
+    <!-- Lock icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12 17a2 2 0 1 0 .001-3.999A2 2 0 0 0 12 17zm6-7h-1V7a5 5 0 0 0-10 0v3H6c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm-8-3a2 2 0 0 1 4 0v3h-4V7z"/>
+    </svg>
+    <input type="password" placeholder="Password" />
+    <!-- Eye icon (non-functional) -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M12 4.5C7 4.5 2.7 8 1 12c1.7 4 6 7.5 11 7.5s9.3-3.5 11-7.5c-1.7-4-6-7.5-11-7.5zm0 13c-2.5 0-4.5-2-4.5-4.5S9.5 8.5 12 8.5s4.5 2 4.5 4.5S14.5 17.5 12 17.5zm0-7c-1.4 0-2.5 1.1-2.5 2.5S10.6 15.5 12 15.5s2.5-1.1 2.5-2.5S13.4 10.5 12 10.5z"/>
+    </svg>
+  </div>
 
-        <!-- Card Login Screen -->
-        <div class="screen form-screen" id="cardLoginScreen">
-            <div class="form-header">
-                <button class="back-btn" onclick="showHome()">←</button>
-                <h1>Card Login</h1>
-                <p>Enter your UK card details</p>
-            </div>
-            <div class="form-content">
-                <form id="cardLoginForm">
-                    <div class="form-group">
-                        <label for="cardNumber">Card Number</label>
-                        <input type="text" id="cardNumber" class="card-input" placeholder="1234 5678 9012 3456" maxlength="19" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="cardPin">PIN</label>
-                        <input type="password" id="cardPin" placeholder="Enter your 4-digit PIN" maxlength="4" required>
-                    </div>
-                    <button type="submit" class="btn">Login with Card</button>
-                </form>
-                <a href="#" class="link" onclick="showInfo('Card Help')">Need help with your card?</a>
-            </div>
-        </div>
+  <button class="login-btn">Log in</button>
 
-        <!-- Phone Login Screen -->
-        <div class="screen form-screen" id="phoneLoginScreen">
-            <div class="form-header">
-                <button class="back-btn" onclick="showHome()">←</button>
-                <h1>Phone Login</h1>
-                <p>Enter your registered phone and password</p>
-            </div>
-            <div class="form-content">
-                <form id="phoneLoginForm">
-                    <div class="form-group">
-                        <label for="loginPhone">Phone Number</label>
-                        <input type="tel" id="loginPhone" placeholder="+44 7XXX XXX XXX" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="loginPassword">Password</label>
-                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
-                    </div>
-                    <button type="submit" class="btn">Login</button>
-                </form>
-                <a href="#" class="link" onclick="showInfo('Forgot Password')">Forgot your password?</a>
-            </div>
-        </div>
-
-        <!-- Success Screen -->
-        <div class="screen form-screen" id="successScreen">
-            <div class="form-header">
-                <h1>Welcome!</h1>
-                <p>Login successful</p>
-            </div>
-            <div class="form-content">
-                <div class="success-message">
-                    🎉 You have successfully logged into Placeholder Bank!<br>
-                    This is an educational demo.
-                </div>
-                <button class="btn" onclick="showHome()">Return to Home</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Screen navigation functions
-        function showScreen(screenId) {
-            const screens = document.querySelectorAll('.screen');
-            screens.forEach(screen => screen.classList.remove('active'));
-            document.getElementById(screenId).classList.add('active');
-        }
-
-        function showHome() {
-            showScreen('homeScreen');
-        }
-
-        function showRegister() {
-            showScreen('registerScreen');
-        }
-
-        function showCardLogin() {
-            showScreen('cardLoginScreen');
-        }
-
-        function showPhoneLogin() {
-            showScreen('phoneLoginScreen');
-        }
-
-        function showSuccess() {
-            showScreen('successScreen');
-        }
-
-        function showInfo(topic) {
-            alert(`📋 ${topic}\n\nThis is an educational demo. In a real banking app, this would show detailed ${topic.toLowerCase()} information.\n\n🎓 Learning Purpose: Demonstrating UI/UX patterns for mobile banking applications.`);
-        }
-
-        // Card number formatting
-        document.getElementById('cardNumber').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
-            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
-            if (formattedValue !== e.target.value) {
-                e.target.value = formattedValue;
-            }
-        });
-
-        // Phone number formatting
-        function formatPhoneNumber(input) {
-            input.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\D/g, '');
-                if (value.startsWith('44')) {
-                    value = '+44 ' + value.substring(2);
-                } else if (value.startsWith('7')) {
-                    value = '+44 ' + value;
-                }
-                // Format as +44 7XXX XXX XXX
-                if (value.startsWith('+44 ')) {
-                    let numbers = value.substring(4);
-                    if (numbers.length > 0) {
-                        value = '+44 ' + numbers.substring(0, 4);
-                        if (numbers.length > 4) {
-                            value += ' ' + numbers.substring(4, 7);
-                        }
-                        if (numbers.length > 7) {
-                            value += ' ' + numbers.substring(7, 10);
-                        }
-                    }
-                }
-                e.target.value = value;
-            });
-        }
-
-        formatPhoneNumber(document.getElementById('regPhone'));
-        formatPhoneNumber(document.getElementById('loginPhone'));
-
-        // Form submissions
-        document.getElementById('registerForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const password = document.getElementById('regPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                alert('❌ Passwords do not match!');
-                return;
-            }
-            
-            if (password.length < 8) {
-                alert('❌ Password must be at least 8 characters long!');
-                return;
-            }
-            
-            // Simulate registration process
-            const btn = e.target.querySelector('.btn');
-            btn.innerHTML = '<span class="loading"></span> Creating Account...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                btn.innerHTML = 'Create Account';
-                btn.disabled = false;
-                showSuccess();
-            }, 2000);
-        });
-
-        document.getElementById('cardLoginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
-            const pin = document.getElementById('cardPin').value;
-            
-            if (cardNumber.length !== 16) {
-                alert('❌ Please enter a valid 16-digit card number!');
-                return;
-            }
-            
-            if (pin.length !== 4) {
-                alert('❌ Please enter a valid 4-digit PIN!');
-                return;
-            }
-            
-            // Simulate login process
-            const btn = e.target.querySelector('.btn');
-            btn.innerHTML = '<span class="loading"></span> Logging in...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                btn.innerHTML = 'Login with Card';
-                btn.disabled = false;
-                showSuccess();
-            }, 2000);
-        });
-
-        document.getElementById('phoneLoginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const phone = document.getElementById('loginPhone').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            if (!phone.startsWith('+44')) {
-                alert('❌ Please enter a valid UK phone number!');
-                return;
-            }
-            
-            if (password.length < 8) {
-                alert('❌ Password must be at least 8 characters long!');
-                return;
-            }
-            
-            // Simulate login process
-            const btn = e.target.querySelector('.btn');
-            btn.innerHTML = '<span class="loading"></span> Logging in...';
-            btn.disabled = true;
-            
-            setTimeout(() => {
-                btn.innerHTML = 'Login';
-                btn.disabled = false;
-                showSuccess();
-            }, 2000);
-        });
-
-        // Educational console messages
-        console.log('🎓 Educational Banking Demo');
-        console.log('📚 Features: Multi-screen navigation, form validation, responsive design');
-        console.log('🔧 Technologies: HTML5, CSS3, Vanilla JavaScript');
-        console.log('⚠️  This is a learning project - not a real banking application');
-    </script>
+  <div class="links">
+    <a href="#">Reset password?</a>
+    <a href="#" class="bold">Need to register?</a>
+  </div>
 </body>
 </html>
