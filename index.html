@@ -64,7 +64,7 @@
       background-color: #4a2572;
     }
 
-    /* Вторая страница - вход */
+    /* Страница Входа */
     .login-buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -87,9 +87,14 @@
       transform: translateY(-3px);
     }
 
-    .login-button.green {
-      background: linear-gradient(45deg, #00c03f, #00a3d6);
+    /* Фиолетовый градиент для главной кнопки */
+    .login-button.purple {
+      background: linear-gradient(45deg, #5B2C89, #3B1C5C);
       color: #fff;
+    }
+
+    .login-button.purple small {
+      color: #e0d8eb;
     }
 
     .small-text {
@@ -98,15 +103,20 @@
       color: #999;
       cursor: pointer;
     }
+
+    .small-text:hover {
+      text-decoration: underline;
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- Страница 1: Cookie -->
+  <!-- Страница 1: Cookies -->
   <div class="container active" id="cookiePage">
     <h1>NatWest</h1>
     <div class="box">
-      <p>Мы используем cookies для улучшения вашего взаимодействия с нашим сервисом. Продолжая использовать это приложение, вы соглашаетесь с нашей Политикой конфиденциальности и использованием cookies.</p>
+      <p>Мы используем cookies для улучшения вашего опыта и безопасности. Продолжая использовать приложение, вы соглашаетесь с нашей Политикой конфиденциальности и использованием cookies.</p>
       <button class="btn" onclick="acceptCookies()">Принять</button>
     </div>
   </div>
@@ -115,7 +125,7 @@
   <div class="container" id="loginPage">
     <h1>NatWest</h1>
     <div class="login-buttons">
-      <div class="login-button green">Войти<br><small>по номеру карты</small></div>
+      <div class="login-button purple">Войти<br><small>по номеру карты</small></div>
       <div class="login-button">Оформить<br><small>карту</small></div>
       <div class="login-button">Войти<br><small>по лицу</small></div>
       <div class="login-button">Войти<br><small>по логину</small></div>
