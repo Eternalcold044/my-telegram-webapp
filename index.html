@@ -42,13 +42,6 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .box p {
-      font-size: 14px;
-      color: #555;
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-
     .btn {
       background: linear-gradient(45deg, #5B2C89, #3B1C5C);
       color: #fff;
@@ -61,49 +54,7 @@
       transition: background-color 0.3s ease;
     }
 
-    .btn:hover {
-      background-color: #4a2572;
-    }
-
-    .small-text {
-      margin-top: 15px;
-      font-size: 12px;
-      color: #999;
-      cursor: pointer;
-    }
-
-    .login-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-gap: 10px;
-      margin-top: 20px;
-    }
-
-    .login-button {
-      background-color: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: left;
-      font-size: 14px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .login-button:hover {
-      transform: translateY(-3px);
-    }
-
-    .login-button.purple {
-      background: linear-gradient(45deg, #5B2C89, #3B1C5C);
-      color: #fff;
-    }
-
-    .login-button.purple small {
-      color: #e0d8eb;
-    }
-
-    input[type="password"] {
+    input[type="password"], input[type="text"], input[type="number"] {
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
@@ -111,68 +62,88 @@
       margin-bottom: 15px;
     }
 
+    .field {
+      margin-bottom: 10px;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Страница Cookies -->
-  <div class="container active" id="cookiePage">
+  <div class="container active" id="cookiesPage">
     <h1>NatWest</h1>
     <div class="box">
-      <p>Мы используем cookies для улучшения вашего опыта и безопасности. Продолжая использовать приложение, вы соглашаетесь с нашей Политикой конфиденциальности и использованием cookies.</p>
-      <button class="btn" onclick="goToLogin()">Принять</button>
-      <button class="btn" onclick="goToLogin()">Отклонить</button>
-      <div class="small-text" onclick="goToDevLogin()">Для разработчиков</div>
+      <p>Мы используем файлы cookie для улучшения вашего опыта. Ознакомьтесь с нашим пользовательским соглашением.</p>
+      <button class="btn" onclick="acceptCookies()">Принять</button>
+      <button class="btn" onclick="acceptCookies()">Отклонить</button>
+      <br><br>
+      <button class="btn" style="background:#999" onclick="goToDevLogin()">Для разработчиков</button>
     </div>
   </div>
 
-  <!-- Страница Ввода Пароля -->
-  <div class="container" id="devLoginPage">
-    <h1>Для Разработчиков</h1>
-    <div class="box">
-      <p>Введите пароль для доступа к режиму администратора:</p>
-      <input type="password" id="adminPassword" placeholder="Введите пароль">
-      <br>
-      <button class="btn" onclick="checkPassword()">Войти</button>
-    </div>
-  </div>
-
-  <!-- Страница Входа -->
   <div class="container" id="loginPage">
     <h1>NatWest</h1>
-    <div class="login-buttons">
-      <div class="login-button purple">Войти<br><small>по номеру карты</small></div>
-      <div class="login-button">Оформить<br><small>карту</small></div>
-      <div class="login-button">Войти<br><small>по лицу</small></div>
-      <div class="login-button">Войти<br><small>по логину</small></div>
+    <div class="box">
+      <button class="btn">Войти по номеру карты</button>
+      <button class="btn">Войти по лицу</button>
+      <button class="btn">Войти по телефону</button>
     </div>
-    <div class="small-text">Не могу войти</div>
   </div>
 
-  <!-- Страница Админки -->
+  <div class="container" id="devLoginPage">
+    <h1>Вход для разработчиков</h1>
+    <div class="box">
+      <input type="password" id="devPassword" placeholder="Введите пароль">
+      <button class="btn" onclick="checkDevPassword()">Войти</button>
+    </div>
+  </div>
+
   <div class="container" id="adminPage">
     <h1>Админ-панель</h1>
     <div class="box">
       <p>Поиск клиента по ID (4 цифры):</p>
       <input type="text" id="clientIdInput" placeholder="Введите ID">
-      <br><br>
+      <br>
       <button class="btn" onclick="searchClient()">Найти</button>
     </div>
   </div>
 
+  <div class="container" id="clientCard">
+    <h1>Карточка клиента</h1>
+    <div class="box">
+      <div class="field">
+        <label>Имя:</label><br>
+        <input type="text" id="clientName" value="John">
+      </div>
+      <div class="field">
+        <label>Фамилия:</label><br>
+        <input type="text" id="clientSurname" value="Doe">
+      </div>
+      <div class="field">
+        <label>Баланс:</label><br>
+        <input type="number" id="clientBalance" value="5000">
+      </div>
+      <div class="field">
+        <label>Уведомление:</label><br>
+        <input type="text" id="clientNotification" value="Нет проблем">
+      </div>
+      <button class="btn" onclick="saveClientData()">Сохранить</button>
+    </div>
+  </div>
+
   <script>
-    function goToLogin() {
-      document.getElementById('cookiePage').classList.remove('active');
+    function acceptCookies() {
+      document.getElementById('cookiesPage').classList.remove('active');
       document.getElementById('loginPage').classList.add('active');
     }
 
     function goToDevLogin() {
-      document.getElementById('cookiePage').classList.remove('active');
+      document.getElementById('cookiesPage').classList.remove('active');
       document.getElementById('devLoginPage').classList.add('active');
     }
 
-    function checkPassword() {
-      const password = document.getElementById('adminPassword').value;
+    function checkDevPassword() {
+      const password = document.getElementById('devPassword').value;
       if (password === 'qwerty787898') {
         document.getElementById('devLoginPage').classList.remove('active');
         document.getElementById('adminPage').classList.add('active');
@@ -181,14 +152,34 @@
       }
     }
 
+    let clientData = {
+      id: '1111',
+      name: 'John',
+      surname: 'Doe',
+      balance: 5000,
+      notification: 'Нет проблем'
+    };
+
     function searchClient() {
-      const clientId = document.getElementById('clientIdInput').value;
-      if (clientId === '1111') {
-        alert('Клиент найден! (Здесь будет карточка клиента)');
-        // Здесь появится карточка клиента на следующем этапе
+      const enteredId = document.getElementById('clientIdInput').value;
+      if (enteredId === clientData.id) {
+        document.getElementById('adminPage').classList.remove('active');
+        document.getElementById('clientCard').classList.add('active');
+        document.getElementById('clientName').value = clientData.name;
+        document.getElementById('clientSurname').value = clientData.surname;
+        document.getElementById('clientBalance').value = clientData.balance;
+        document.getElementById('clientNotification').value = clientData.notification;
       } else {
         alert('Клиент не найден');
       }
+    }
+
+    function saveClientData() {
+      clientData.name = document.getElementById('clientName').value;
+      clientData.surname = document.getElementById('clientSurname').value;
+      clientData.balance = parseFloat(document.getElementById('clientBalance').value);
+      clientData.notification = document.getElementById('clientNotification').value;
+      alert('Данные сохранены');
     }
   </script>
 
