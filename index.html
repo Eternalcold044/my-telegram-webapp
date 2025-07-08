@@ -1,83 +1,134 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Вход в систему</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NatWest Mini App</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(to bottom, #cfcfe9, #eceafd);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      color: #333;
     }
 
     .container {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px 20px;
-      border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      backdrop-filter: blur(8px);
+      padding: 20px;
+    }
+
+    .container.active {
+      display: flex;
     }
 
     h1 {
-      font-size: 20px;
-      font-weight: 700;
-      color: #ffffff;
-      margin-bottom: 5px;
-    }
-
-    p {
-      font-size: 14px;
-      color: #ddd;
-      margin-bottom: 30px;
-    }
-
-    .lock-img {
-      width: 100px;
-      margin-bottom: 25px;
-    }
-
-    input[type="password"] {
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      width: 200px;
-      text-align: center;
+      color: #5B2C89;
+      font-size: 28px;
       margin-bottom: 20px;
-      font-size: 14px;
     }
 
-    button {
-      background-color: #5f4bb6;
-      color: white;
-      border: none;
-      padding: 10px 30px;
-      border-radius: 8px;
+    .box {
+      background: #fff;
+      padding: 25px;
+      border-radius: 16px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .box p {
       font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      background-color: #5B2C89;
+      color: #fff;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
 
-    button:hover {
-      background-color: #4b3a9a;
+    .btn:hover {
+      background-color: #4a2572;
+    }
+
+    /* Вторая страница - вход */
+    .login-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 10px;
+      margin-top: 20px;
+    }
+
+    .login-button {
+      background-color: #fff;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+      font-size: 14px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .login-button:hover {
+      transform: translateY(-3px);
+    }
+
+    .login-button.green {
+      background: linear-gradient(45deg, #00c03f, #00a3d6);
+      color: #fff;
+    }
+
+    .small-text {
+      margin-top: 30px;
+      font-size: 13px;
+      color: #999;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Добро пожаловать в</h1>
-    <p>Управляйте своими финансами легко.</p>
-    <img src="https://cdn-icons-png.flaticon.com/512/3064/3064197.png" alt="Замок" class="lock-img">
-    <div>
-      <input type="password" placeholder="Введите пароль">
+
+  <!-- Страница 1: Cookie -->
+  <div class="container active" id="cookiePage">
+    <h1>NatWest</h1>
+    <div class="box">
+      <p>Мы используем cookies для улучшения вашего взаимодействия с нашим сервисом. Продолжая использовать это приложение, вы соглашаетесь с нашей Политикой конфиденциальности и использованием cookies.</p>
+      <button class="btn" onclick="acceptCookies()">Принять</button>
     </div>
-    <button>Войти</button>
   </div>
+
+  <!-- Страница 2: Вход -->
+  <div class="container" id="loginPage">
+    <h1>NatWest</h1>
+    <div class="login-buttons">
+      <div class="login-button green">Войти<br><small>по номеру карты</small></div>
+      <div class="login-button">Оформить<br><small>карту</small></div>
+      <div class="login-button">Войти<br><small>по лицу</small></div>
+      <div class="login-button">Войти<br><small>по логину</small></div>
+    </div>
+    <div class="small-text">Не могу войти</div>
+  </div>
+
+  <script>
+    function acceptCookies() {
+      document.getElementById('cookiePage').classList.remove('active');
+      document.getElementById('loginPage').classList.add('active');
+    }
+  </script>
+
 </body>
 </html>
