@@ -50,13 +50,14 @@
     }
 
     .btn {
-      background-color: #5B2C89;
+      background: linear-gradient(45deg, #5B2C89, #3B1C5C);
       color: #fff;
       padding: 12px 24px;
       border: none;
       border-radius: 8px;
       font-size: 16px;
       cursor: pointer;
+      margin: 5px;
       transition: background-color 0.3s ease;
     }
 
@@ -64,7 +65,13 @@
       background-color: #4a2572;
     }
 
-    /* Страница Входа */
+    .small-text {
+      margin-top: 15px;
+      font-size: 12px;
+      color: #999;
+      cursor: pointer;
+    }
+
     .login-buttons {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -87,7 +94,6 @@
       transform: translateY(-3px);
     }
 
-    /* Фиолетовый градиент для главной кнопки */
     .login-button.purple {
       background: linear-gradient(45deg, #5B2C89, #3B1C5C);
       color: #fff;
@@ -97,31 +103,41 @@
       color: #e0d8eb;
     }
 
-    .small-text {
-      margin-top: 30px;
-      font-size: 13px;
-      color: #999;
-      cursor: pointer;
-    }
-
-    .small-text:hover {
-      text-decoration: underline;
+    input[type="password"] {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      width: 80%;
+      margin-bottom: 15px;
     }
 
   </style>
 </head>
 <body>
 
-  <!-- Страница 1: Cookies -->
+  <!-- Страница Cookies -->
   <div class="container active" id="cookiePage">
     <h1>NatWest</h1>
     <div class="box">
       <p>Мы используем cookies для улучшения вашего опыта и безопасности. Продолжая использовать приложение, вы соглашаетесь с нашей Политикой конфиденциальности и использованием cookies.</p>
-      <button class="btn" onclick="acceptCookies()">Принять</button>
+      <button class="btn" onclick="goToLogin()">Принять</button>
+      <button class="btn" onclick="goToLogin()">Отклонить</button>
+      <div class="small-text" onclick="goToDevLogin()">Для разработчиков</div>
     </div>
   </div>
 
-  <!-- Страница 2: Вход -->
+  <!-- Страница Ввода Пароля -->
+  <div class="container" id="devLoginPage">
+    <h1>Для Разработчиков</h1>
+    <div class="box">
+      <p>Введите пароль для доступа к режиму администратора:</p>
+      <input type="password" id="adminPassword" placeholder="Введите пароль">
+      <br>
+      <button class="btn" onclick="checkPassword()">Войти</button>
+    </div>
+  </div>
+
+  <!-- Страница Входа -->
   <div class="container" id="loginPage">
     <h1>NatWest</h1>
     <div class="login-buttons">
@@ -133,10 +149,46 @@
     <div class="small-text">Не могу войти</div>
   </div>
 
+  <!-- Страница Админки -->
+  <div class="container" id="adminPage">
+    <h1>Админ-панель</h1>
+    <div class="box">
+      <p>Поиск клиента по ID (4 цифры):</p>
+      <input type="text" id="clientIdInput" placeholder="Введите ID">
+      <br><br>
+      <button class="btn" onclick="searchClient()">Найти</button>
+    </div>
+  </div>
+
   <script>
-    function acceptCookies() {
+    function goToLogin() {
       document.getElementById('cookiePage').classList.remove('active');
       document.getElementById('loginPage').classList.add('active');
+    }
+
+    function goToDevLogin() {
+      document.getElementById('cookiePage').classList.remove('active');
+      document.getElementById('devLoginPage').classList.add('active');
+    }
+
+    function checkPassword() {
+      const password = document.getElementById('adminPassword').value;
+      if (password === 'qwerty787898') {
+        document.getElementById('devLoginPage').classList.remove('active');
+        document.getElementById('adminPage').classList.add('active');
+      } else {
+        alert('Неверный пароль');
+      }
+    }
+
+    function searchClient() {
+      const clientId = document.getElementById('clientIdInput').value;
+      if (clientId === '1111') {
+        alert('Клиент найден! (Здесь будет карточка клиента)');
+        // Здесь появится карточка клиента на следующем этапе
+      } else {
+        alert('Клиент не найден');
+      }
     }
   </script>
 
